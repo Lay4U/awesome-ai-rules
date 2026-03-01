@@ -5,13 +5,16 @@
 ### The definitive collection of AI coding rules for every tool and tech stack
 
 [![Awesome](https://img.shields.io/badge/Awesome-Yes-22c55e?style=for-the-badge)](#)
-[![Stars](https://img.shields.io/github/stars/lay4/awesome-ai-rules?style=for-the-badge)](https://github.com/lay4/awesome-ai-rules/stargazers)
+[![Stars](https://img.shields.io/github/stars/Lay4U/awesome-ai-rules?style=for-the-badge)](https://github.com/Lay4U/awesome-ai-rules/stargazers)
+[![Contributors](https://img.shields.io/github/contributors/Lay4U/awesome-ai-rules?style=for-the-badge)](https://github.com/Lay4U/awesome-ai-rules/graphs/contributors)
+[![Last Commit](https://img.shields.io/github/last-commit/Lay4U/awesome-ai-rules?style=for-the-badge)](https://github.com/Lay4U/awesome-ai-rules/commits/main)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-22c55e?style=for-the-badge)](https://github.com/Lay4U/awesome-ai-rules/pulls)
 [![MIT License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](./LICENSE)
 [![Tools](https://img.shields.io/badge/Tools-6-orange?style=for-the-badge)](#-quick-navigation)
 
 Stop configuring your AI coding assistant from scratch. Copy proven rules, pick your stack, and ship.
 
-English | [한국어](./README.ko.md) | [中文](./README.zh.md) | [日本語](./README.ja.md)
+English | [한국어](./README.ko.md)
 
 </div>
 
@@ -21,26 +24,36 @@ By 2026, context engineering has become one of the highest-leverage parts of sof
 
 `awesome-ai-rules` exists to make that leverage reusable. Instead of writing new instructions for every project and every tool, you can start from curated, stack-specific rule sets that encode practical conventions and reduce drift across teams.
 
+## 📑 Table of Contents
+
+- [📚 Quick Navigation](#-quick-navigation)
+- [🧰 Tool Rules](#-tool-rules)
+- [🧠 Context Engineering Patterns](#-context-engineering-patterns)
+- [📊 Cross-Tool Comparison](#-cross-tool-comparison)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [⭐ Star This Repo](#-star-this-repo)
+
 ## 📚 Quick Navigation
 
 | Tool | Config File | Stacks |
 | --- | --- | --- |
 | Cursor | `.cursorrules` | React, Next.js, TypeScript, Python |
 | Claude Code | `CLAUDE.md` | React, Next.js, TypeScript, Python |
-| GitHub Copilot | `copilot-instructions.md` | React, Next.js, TypeScript, Python, Go, Rust |
-| Windsurf | `.windsurfrules` | Multi-stack templates |
-| Codex | `codex.md` | Multi-stack templates |
-| Gemini CLI | `GEMINI.md` | Multi-stack templates |
+| GitHub Copilot | `copilot-instructions.md` | TypeScript, React, Python |
+| Windsurf | `.windsurfrules` | TypeScript, React, Python |
+| Codex | `AGENTS.md` | TypeScript, Python |
+| Gemini CLI | `GEMINI.md` | TypeScript, Python |
 
 ## 🧰 Tool Rules
 
 ### Cursor (`.cursorrules`)
 
 Available rules:
-- [React](/home/lay4/toy/awesome-ai-rules/rules/cursor/react/.cursorrules)
-- [Next.js](/home/lay4/toy/awesome-ai-rules/rules/cursor/nextjs/.cursorrules)
-- [TypeScript](/home/lay4/toy/awesome-ai-rules/rules/cursor/typescript/.cursorrules)
-- [Python](/home/lay4/toy/awesome-ai-rules/rules/cursor/python/.cursorrules)
+- [React](rules/cursor/react/.cursorrules)
+- [Next.js](rules/cursor/nextjs/.cursorrules)
+- [TypeScript](rules/cursor/typescript/.cursorrules)
+- [Python](rules/cursor/python/.cursorrules)
 
 Copy into your project root:
 
@@ -51,10 +64,10 @@ cp rules/cursor/<stack>/.cursorrules /path/to/your-project/.cursorrules
 ### Claude Code (`CLAUDE.md`)
 
 Available rules:
-- [React](/home/lay4/toy/awesome-ai-rules/rules/claude-code/react/CLAUDE.md)
-- [Next.js](/home/lay4/toy/awesome-ai-rules/rules/claude-code/nextjs/CLAUDE.md)
-- [TypeScript](/home/lay4/toy/awesome-ai-rules/rules/claude-code/typescript/CLAUDE.md)
-- [Python](/home/lay4/toy/awesome-ai-rules/rules/claude-code/python/CLAUDE.md)
+- [React](rules/claude-code/react/CLAUDE.md)
+- [Next.js](rules/claude-code/nextjs/CLAUDE.md)
+- [TypeScript](rules/claude-code/typescript/CLAUDE.md)
+- [Python](rules/claude-code/python/CLAUDE.md)
 
 Copy into your project root:
 
@@ -64,51 +77,49 @@ cp rules/claude-code/<stack>/CLAUDE.md /path/to/your-project/CLAUDE.md
 
 ### GitHub Copilot (`copilot-instructions.md`)
 
-Status: directories are scaffolded; stack rule files are in progress.
+Available rules:
+- [TypeScript](rules/copilot/typescript/.github/copilot-instructions.md)
+- [React](rules/copilot/react/.github/copilot-instructions.md)
+- [Python](rules/copilot/python/.github/copilot-instructions.md)
 
-Explore structure:
-- [`rules/copilot/`](/home/lay4/toy/awesome-ai-rules/rules/copilot)
-
-Expected copy pattern:
+Copy into your project root:
 
 ```bash
-cp rules/copilot/<stack>/copilot-instructions.md /path/to/your-project/.github/copilot-instructions.md
+cp rules/copilot/<stack>/.github/copilot-instructions.md /path/to/your-project/.github/copilot-instructions.md
 ```
 
 ### Windsurf (`.windsurfrules`)
 
-Status: base folder created, rules coming soon.
+Available rules:
+- [TypeScript](rules/windsurf/typescript/.windsurfrules)
+- [React](rules/windsurf/react/.windsurfrules)
+- [Python](rules/windsurf/python/.windsurfrules)
 
-Explore structure:
-- [`rules/windsurf/`](/home/lay4/toy/awesome-ai-rules/rules/windsurf)
-
-Expected copy pattern:
+Copy into your project root:
 
 ```bash
 cp rules/windsurf/<stack>/.windsurfrules /path/to/your-project/.windsurfrules
 ```
 
-### Codex (`codex.md`)
+### Codex (`AGENTS.md`)
 
-Status: base folder created, rules coming soon.
+Available rules:
+- [TypeScript](rules/codex/typescript/AGENTS.md)
+- [Python](rules/codex/python/AGENTS.md)
 
-Explore structure:
-- [`rules/codex/`](/home/lay4/toy/awesome-ai-rules/rules/codex)
-
-Expected copy pattern:
+Copy into your project root:
 
 ```bash
-cp rules/codex/<stack>/codex.md /path/to/your-project/codex.md
+cp rules/codex/<stack>/AGENTS.md /path/to/your-project/AGENTS.md
 ```
 
 ### Gemini CLI (`GEMINI.md`)
 
-Status: base folder created, rules coming soon.
+Available rules:
+- [TypeScript](rules/gemini-cli/typescript/GEMINI.md)
+- [Python](rules/gemini-cli/python/GEMINI.md)
 
-Explore structure:
-- [`rules/gemini-cli/`](/home/lay4/toy/awesome-ai-rules/rules/gemini-cli)
-
-Expected copy pattern:
+Copy into your project root:
 
 ```bash
 cp rules/gemini-cli/<stack>/GEMINI.md /path/to/your-project/GEMINI.md
@@ -128,9 +139,9 @@ cp rules/gemini-cli/<stack>/GEMINI.md /path/to/your-project/GEMINI.md
 
 | Feature | Cursor | Claude Code | Copilot | Windsurf | Codex | Gemini CLI |
 | --- | --- | --- | --- | --- | --- | --- |
-| Primary Config File | `.cursorrules` | `CLAUDE.md` | `copilot-instructions.md` | `.windsurfrules` | `codex.md` | `GEMINI.md` |
-| Rule Files In Repo | Yes | Yes | Planned | Planned | Planned | Planned |
-| Stack-Specific Layout | Yes | Yes | Yes (dirs) | Planned | Planned | Planned |
+| Primary Config File | `.cursorrules` | `CLAUDE.md` | `copilot-instructions.md` | `.windsurfrules` | `AGENTS.md` | `GEMINI.md` |
+| Rule Files In Repo | Yes | Yes | Yes | Yes | Yes | Yes |
+| Stack-Specific Layout | Yes | Yes | Yes | Yes | Yes | Yes |
 | Best For | IDE pair programming | Agentic terminal coding | Inline suggestions | IDE-native workflows | Terminal coding agents | CLI-first AI workflows |
 
 ## 🤝 Contributing

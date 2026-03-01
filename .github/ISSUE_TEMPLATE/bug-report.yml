@@ -1,0 +1,32 @@
+name: Bug Report
+description: Report an incorrect or outdated rule
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: input
+    id: rule_file
+    attributes:
+      label: Which rule file
+      description: Provide the path to the rule file.
+      placeholder: rules/codex/typescript/some-rule.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: whats_wrong
+    attributes:
+      label: What's wrong
+      description: Describe the issue with the current rule.
+      placeholder: The rule references a deprecated CLI flag.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested_fix
+    attributes:
+      label: Suggested fix
+      description: Share a specific correction or updated wording.
+      placeholder: Replace `--old-flag` with `--new-flag` and update the example.
+    validations:
+      required: true

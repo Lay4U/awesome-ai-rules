@@ -1,0 +1,62 @@
+name: New Rule
+description: Submit a new community rule
+title: "[New Rule] "
+labels:
+  - new-rule
+body:
+  - type: dropdown
+    id: tool
+    attributes:
+      label: Tool
+      description: Which tool is this rule for?
+      options:
+        - Cursor
+        - Claude Code
+        - Copilot
+        - Windsurf
+        - Codex
+        - Gemini CLI
+        - Aider
+        - Cline
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: stack
+    attributes:
+      label: Stack
+      description: Which tech stack does this rule target?
+      options:
+        - TypeScript
+        - React
+        - Next.js
+        - Python
+        - Go
+        - Rust
+        - Vue
+        - Svelte
+        - Java
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: rule_content
+    attributes:
+      label: Rule content
+      description: Paste the proposed rule text.
+      placeholder: |
+        # Example
+        - Prefer explicit types for exported APIs.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why_this_helps
+    attributes:
+      label: Why this rule helps
+      description: Explain the practical benefit and expected impact.
+      placeholder: This avoids ambiguous API usage and reduces review back-and-forth.
+    validations:
+      required: true

@@ -1,0 +1,93 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate README rule file references exist
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mapfile -t readmes < <(find . -maxdepth 1 -type f -name 'README*.md' | sort)
+          if [ "${#readmes[@]}" -eq 0 ]; then
+            echo "No README*.md files found."
+            exit 0
+          fi
+
+          missing=0
+
+          for readme in "${readmes[@]}"; do
+            echo "Checking rule references in $readme"
+
+            mapfile -t refs < <(
+              grep -oE '\]\((rules/[^)#? ]+\.md)(#[^)]+)?\)' "$readme" \
+                | sed -E 's/^\]\((rules\/[^)#? ]+\.md)(#[^)]+)?\)$/\1/' \
+                | sort -u
+            )
+
+            if [ "${#refs[@]}" -eq 0 ]; then
+              echo "No rules/*.md references found in $readme"
+              continue
+            fi
+
+            for ref in "${refs[@]}"; do
+              if [ ! -f "$ref" ]; then
+                echo "Missing referenced rule file in $readme: $ref"
+                missing=1
+              fi
+            done
+          done
+
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Check broken relative links in markdown files
+        shell: bash
+        run: |
+          set -euo pipefail
+          failed=0
+
+          while IFS= read -r file; do
+            while IFS= read -r link; do
+              case "$link" in
+                http://*|https://*|mailto:*|\#*|tel:*|/*)
+                  continue
+                  ;;
+              esac
+
+              clean="${link%%#*}"
+              clean="${clean%%\?*}"
+
+              if [ -z "$clean" ]; then
+                continue
+              fi
+
+              target="$(dirname "$file")/$clean"
+              if [ ! -e "$target" ]; then
+                echo "Broken relative link in $file: $link"
+                failed=1
+              fi
+            done < <(grep -oP '(?<=\]\()[^)]+' "$file" || true)
+          done < <(find . -type f -name '*.md' -not -path './.git/*' | sort)
+
+          if [ "$failed" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Markdown lint (non-blocking)
+        continue-on-error: true
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: |
+            **/*.md

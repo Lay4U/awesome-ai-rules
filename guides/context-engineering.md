@@ -1,252 +1,177 @@
 # Context Engineering Guide (Practical, 2026)
-
-## Definition And Why It Matters
-Context engineering is the discipline of shaping the full information environment an AI coding agent receives.
-It is broader than prompt writing and includes durable rules, task constraints, conversation decisions, and tool evidence.
-A concise definition: context engineering is input architecture for model behavior.
-
-In 2026, context engineering matters because agents now run long autonomous workflows.
-They can plan, edit many files, execute commands, and report outcomes in one loop.
-When context is weak, mistakes scale quickly across a repository.
-When context is strong, quality improves before code review, not after.
-
-Two quotes capture the shift.
-Andrej Karpathy: "The hottest new programming language is English."
-Shopify CEO Tobi Lutke has emphasized that effective AI use is now an expected baseline skill.
-Together they imply that instruction quality is now an engineering multiplier.
-
+## What Is Context Engineering?
+Context engineering is the practice of designing the full input environment an AI coding agent uses.
+It is more than prompting: it combines stable rules, task context, conversation decisions, and tool evidence.
+A short definition: context engineering is input architecture for model behavior.
+Why it matters in 2026:
+- Agents run multi-step, multi-file workflows with terminal execution.
+- Ambiguous inputs create expensive downstream regressions.
+- Teams now share reusable rules across repos and tools.
+- First-pass quality matters because review bandwidth is limited.
+Two references that capture this moment:
+- Andrej Karpathy: "The hottest new programming language is English."
+- Shopify CEO Tobi Lutke has emphasized AI fluency as a baseline expectation for teams.
 ## The 4 Layers Of Context
-A practical model is four layers from stable policy to dynamic evidence.
-
+Use four layers from stable policy to dynamic runtime evidence.
 ### Layer 1: Project Rules
-Project rules are durable standards, usually in files like `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, or `copilot-instructions.md`.
-This layer defines non-negotiable behavior and prevents re-explaining standards on every task.
-
-Best practices for Project Rules:
-- Start with a one-line role and scope statement.
+Examples: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `copilot-instructions.md`.
+Purpose: define durable standards that should hold for every task.
+Best practices:
+- Start with a role statement and scope.
 - Separate hard constraints from preferences.
-- Use precise, testable language.
-- Keep conventions concise and scannable.
+- Keep each rule atomic, concrete, and testable.
+- Use consistent modal language (`must`, `should`, `may`).
 - End with definition-of-done checks.
-
 ### Layer 2: Task Context
-Task context translates one request into specific execution constraints.
-It should describe objective, boundaries, acceptance criteria, and required verification.
-
-Best practices for Task Context:
+Purpose: translate one request into precise execution constraints.
+Best practices:
 - Put objective first.
-- Name exact files/paths when known.
-- State out-of-scope changes.
-- Include compatibility or performance limits.
-- List mandatory test/lint/typecheck commands.
-
+- Name specific files/paths where possible.
+- State out-of-scope areas explicitly.
+- Include acceptance criteria and required validation commands.
+- Add performance/compatibility constraints when relevant.
 ### Layer 3: Conversation History
-Conversation history stores decisions made during collaboration.
-It captures assumptions, clarifications, and approved tradeoffs.
-
-Best practices for Conversation History:
+Purpose: preserve assumptions, clarifications, and chosen approaches during collaboration.
+Best practices:
 - Restate plan after major pivots.
-- Resolve ambiguity before broad edits.
-- Record temporary exceptions explicitly.
-- Do not depend on implicit memory for critical constraints.
-
+- Confirm assumptions before broad edits.
+- Record approved exceptions explicitly.
+- Do not rely on implicit memory for critical constraints.
 ### Layer 4: Tool Results
-Tool results are objective runtime evidence: errors, tests, lint output, typecheck output, logs, diffs.
-This is the closest thing to ground truth during implementation.
-
-Best practices for Tool Results:
-- Re-run checks after edits.
-- Cite failing command and key evidence.
-- Distinguish observed output from inferred cause.
-- Prefer tool evidence over assumptions.
-
-## Layer Precedence
-Use a clear precedence order:
-1. Project Rules.
-2. Task Context.
-3. Conversation History.
-4. Tool Results.
-
-When instructions conflict:
+Purpose: provide objective evidence from command execution and code changes.
+Typical inputs: tests, lints, typechecks, logs, and diff summaries.
+Best practices:
+- Treat tool output as source of truth.
+- Re-run relevant checks after edits.
+- Report key evidence with file-level precision.
+- Separate observed facts from inferred causes.
+## Layer Precedence And Conflict Handling
+Recommended precedence:
+1. Project rules.
+2. Task context.
+3. Conversation decisions.
+4. Tool results.
+When conflicts occur:
 - Prefer stricter safety constraints.
-- Ask for clarification when high-priority rules disagree.
-- Record exceptions in task context so they remain explicit.
-
-## Best Practices By Layer (Quick Reference)
-
+- Ask for clarification if high-priority instructions disagree.
+- Record explicit exceptions in task context.
+Working heuristic:
+- Layer 1 sets policy.
+- Layer 2 sets mission.
+- Layer 3 sets coordination.
+- Layer 4 validates reality.
+## Best Practices Per Layer
 ### Project Rules Checklist
-- Role: one sentence, explicit responsibility.
-- Constraints: typed, testable, and non-ambiguous.
-- Conventions: naming, style, architecture, testing.
-- Error handling: boundary behavior and exception policy.
-- Definition of done: executable commands.
-
+- One-line role definition.
+- Clear constraints for typing, testing, style, and error handling.
+- Concise conventions for naming and module boundaries.
+- Executable definition of done.
 ### Task Context Checklist
 - Exact objective.
-- Target paths.
-- Non-goals.
-- Acceptance criteria.
-- Required verification commands.
-
+- Target file list.
+- Non-goals and boundaries.
+- Acceptance tests.
+- Required commands.
 ### Conversation Checklist
-- Confirm assumptions before significant edits.
 - Track unresolved questions.
-- Reconfirm after requirement changes.
-
+- Confirm decisions before large edits.
+- Reconfirm plan after requirement changes.
 ### Tool Results Checklist
 - Run relevant checks.
-- Capture failures with file-level precision.
+- Capture failing command + key error lines.
 - Report passes and failures.
 - Re-test after fixes.
-
 ## Common Patterns
-
-### Pattern 1: Few-Shot Examples In Rules
-Few-shot examples help when a rule is subtle and likely to be misread.
-Keep examples short and representative; avoid turning rule files into tutorials.
-Use them for high-impact conventions like input validation and boundary error mapping.
-
-### Pattern 2: Negative Examples
-Negative examples prevent common shortcuts that violate team standards.
-Examples:
-- TypeScript: avoid `any` in public interfaces.
-- Python: avoid broad `except Exception` without context/re-raise.
-
-Negative examples work because they remove plausible but undesirable interpretations.
-
-### Pattern 3: Explicit Role Definitions
-A short role line at the top aligns planning behavior.
-Example: "You are the coding agent for this repository."
-This reduces ambiguity between chat-style help and execution-style delivery.
-
-### Pattern 4: Definition Of Done
-A strong rules file ends with objective completion checks.
-Definition of done should include commands and reporting expectations.
-This closes the loop between generation and verification.
-
+### Pattern: Few-Shot Examples In Rules
+Use a small example when a rule is likely to be misinterpreted.
+Keep examples short, realistic, and focused on high-impact behavior.
+Do not fill rules files with tutorial-style content.
+### Pattern: Negative Examples
+State what to avoid for recurring mistakes.
+Examples: avoid `any` in TypeScript public APIs; avoid broad Python exception catches without context/re-raise.
+Negative examples reduce plausible but undesirable shortcuts.
+### Pattern: Explicit Role Definitions
+Start rule files with one clear role sentence.
+This reduces drift between assistant-like responses and agent-like execution behavior.
+### Pattern: Definition Of Done
+End with commands and verification expectations.
+Definition-of-done criteria should be objective and executable.
 ## Anti-Patterns
-
-### Anti-Pattern 1: Overly Long Rules
-Symptoms:
-- Important constraints buried under prose.
-- Low adherence due to poor scanability.
-
-Fixes:
-- Keep core rules short and explicit.
-- Move rationale into guides.
-- Remove duplicate statements regularly.
-
-### Anti-Pattern 2: Conflicting Instructions
-Symptoms:
-- Different sections imply incompatible behavior.
-- Agent output is inconsistent across similar tasks.
-
-Fixes:
-- Add precedence statements.
-- Use one source of truth for each requirement.
-- Standardize modal language (`must`, `should`, `may`).
-
-### Anti-Pattern 3: Vague Guidance
-Symptoms:
-- "Write clean code" with no measurable standard.
-
-Fixes:
-- Replace with concrete criteria and commands.
-- Tie expected behavior to tests and lint rules.
-
-### Anti-Pattern 4: Tool-Blind Rules
-Symptoms:
-- Rules assume identical capabilities across tools.
-
-Fixes:
-- Add tool-specific sections.
-- Keep shared policy portable and concise.
-
+### Anti-Pattern: Overly Long Rules
+Symptoms: key constraints buried; low adherence.
+Fix: keep core rules short, move rationale to guides, prune duplicates regularly.
+### Anti-Pattern: Conflicting Instructions
+Symptoms: inconsistent outputs across similar tasks.
+Fix: add precedence rules, remove duplicated constraints, standardize wording.
+### Anti-Pattern: Vague Instructions
+Symptoms: broad phrases like "write clean code" without checks.
+Fix: replace with concrete requirements tied to commands and outputs.
+### Anti-Pattern: Tool-Blind Guidance
+Symptoms: rules assume identical capabilities across tools.
+Fix: add tool-specific notes while keeping shared policy portable.
 ## Tool-Specific Tips
-
 ### Cursor
-- Put durable style and architecture policy in `.cursorrules`.
-- Keep instructions short and actionable.
-- Prefer explicit file scope for large edits.
-
+- Keep `.cursorrules` compact and high signal.
+- Focus on codebase conventions and file-scope boundaries.
+- Use short examples for recurring refactors.
 ### Claude Code
 - Put durable policy in `CLAUDE.md`.
-- Define terminal workflow and required verification.
+- Define terminal workflow and validation commands.
 - Require explicit reporting when checks are skipped.
-
 ### GitHub Copilot
-- Put repository policy in `copilot-instructions.md`.
-- Keep constraints compact for inline generation.
-- Enforce standards with CI rather than long instructions.
-
+- Put repo policy in `copilot-instructions.md`.
+- Keep instructions concise for inline generation.
+- Enforce quality with CI rather than long prose.
 ### Codex
 - Put durable policy in `AGENTS.md`.
-- Define autonomy boundaries and escalation conditions.
-- Require command-backed verification before completion.
-
+- Define autonomy boundaries and escalation triggers.
+- Require command-backed verification.
 ### Gemini CLI
 - Put durable policy in `GEMINI.md`.
-- Specify typing, testing, and error-handling conventions.
-- Keep sections operational and easy to scan.
-
+- Specify typing, testing, style, and error handling conventions.
+- Keep guidance short and operational.
 ## Template For Effective Rules
-Use this structure for new rule files.
-
+Use this structure: Role, Constraints, Conventions, Examples, Definition of Done.
 ### Role
-- Who the agent is and what outcome it optimizes.
-
+State who the agent is and what it should optimize.
 ### Constraints
-- Non-negotiable requirements and safety boundaries.
-
+List non-negotiable requirements and safety boundaries.
 ### Conventions
-- Naming, formatting, architecture, testing, and error handling.
-
+Specify naming, style, architecture, testing, and error-handling norms.
 ### Examples
-- One positive example for a nuanced rule.
-- One negative example for a recurring pitfall.
-
+Add one positive and one negative example for nuanced standards.
 ### Definition Of Done
-- Required commands.
-- Required evidence in the final report.
-
-## Minimal Template
+List required commands and required evidence.
+## Minimal Template Example
 ```md
 # Project Rules
-
 ## Role
 - You are the coding agent for this repository.
-
 ## Constraints
 - TypeScript strict mode required.
 - No `any` in public APIs.
-
 ## Conventions
 - Prefer named exports.
 - Use vitest.
 - Use 2-space indentation and semicolons.
-
 ## Examples
-- Good: validate unknown input before property access.
+- Good: validate unknown input before access.
 - Bad: cast external payloads to `any`.
-
 ## Definition Of Done
 - `pnpm typecheck`
 - `pnpm test`
 - `pnpm lint`
 ```
-
 ## Rollout Plan
 1. Start with one language-specific rules file.
-2. Add definition-of-done commands.
+2. Add explicit definition-of-done commands.
 3. Pilot on several real tasks.
-4. Track rework rate and review comments.
-5. Tighten ambiguous sections on a regular cadence.
-
+4. Measure rework and review friction.
+5. Tighten ambiguous sections every two weeks.
 ## Final Checklist
 - Rules are concise, concrete, and non-conflicting.
-- Task prompts define acceptance criteria.
-- Conversation history captures key decisions.
-- Tool results validate outcomes.
-- Completion criteria are executable.
-
-Context engineering succeeds when guidance is layered, explicit, and verifiable.
+- Task prompts include acceptance criteria.
+- Conversation preserves key decisions.
+- Tool outputs validate results.
+- Done criteria are executable.
+Context engineering works best when guidance is layered, explicit, and verifiable.
