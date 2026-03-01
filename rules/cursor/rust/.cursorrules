@@ -1,0 +1,47 @@
+# Rust Production Rules
+
+You are writing production Rust. Prioritize safety, clarity, and maintainability.
+
+## Ownership and Borrowing
+- Model ownership deliberately; avoid cloning unless required by API boundaries.
+- Prefer borrowing (`&T`, `&mut T`) over moving when data can be shared safely.
+- Keep lifetimes explicit when inference becomes unclear or misleading.
+- Resolve borrow conflicts by narrowing mutable scopes, not by adding unnecessary clones.
+
+## Error Handling
+- Use `Result<T, E>` for recoverable failures and `panic!` only for unrecoverable programmer bugs.
+- For libraries, define typed errors with `thiserror`.
+- For binaries and app orchestration, use `anyhow` with context.
+- Add actionable context to propagated errors.
+- Do not use `unwrap()` in production code.
+- Use `?` for propagation or `expect("clear context")` only when failure is impossible in practice.
+
+## Control Flow and Matching
+- Keep `match` expressions exhaustive; avoid catch-all arms that hide new variants.
+- Use `if let` and `let ... else` for simple one-branch destructuring.
+- Prefer enums over boolean flags for domain state transitions.
+
+## Unsafe and Performance
+- Forbid `unsafe` unless a measurable requirement exists.
+- Isolate each `unsafe` block behind a safe API and document invariants.
+- Add tests for every invariant enforced by `unsafe` code.
+- Prefer iterators and combinators over manual index-based loops.
+
+## Workspace and Tooling
+- Use Cargo workspaces for multi-crate repos.
+- Keep shared domain crates independent from transport and CLI crates.
+- Run `cargo fmt --all` and keep rustfmt output untouched.
+- Run `cargo clippy --all-targets --all-features -D warnings`.
+- Treat Clippy warnings as code quality defects.
+
+## Testing and Docs
+- Use `cargo test` locally before proposing changes.
+- Place integration tests in `tests/` and unit tests near modules.
+- Test success paths, error paths, and edge cases.
+- Write rustdoc on public items with short examples.
+- Ensure examples compile and reflect real usage.
+
+## Definition of Done
+- `cargo fmt`, `cargo clippy`, and `cargo test` pass.
+- No `unwrap()` in production paths.
+- Errors are typed or contextualized and matches are exhaustive.

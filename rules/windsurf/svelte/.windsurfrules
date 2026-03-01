@@ -1,0 +1,47 @@
+# Windsurf Rules: Svelte
+
+## Baseline
+- Build with Svelte 5, SvelteKit, and strict TypeScript.
+- Prioritize explicit state, predictable routing, and accessible interactions.
+
+## Runes First
+- Use `$state` for component state.
+- Use `$derived` for computed projections.
+- Use `$effect` for side effects only.
+- Prefer rune syntax in new code over legacy reactive statements.
+
+## Components and Props
+- Use `<script lang="ts">` in all components.
+- Access component inputs via `$props()` with explicit typing.
+- Keep components focused and split mixed responsibilities.
+
+## SvelteKit Patterns
+- Follow route naming conventions (`+page.svelte`, `+layout.svelte`).
+- Use route `load` functions for data retrieval and shaping.
+- Keep `load` outputs serializable and minimal.
+- Place privileged operations in server-safe contexts.
+
+## State Sharing
+- Use runes for local and close-by state.
+- Use stores for long-distance shared state across the tree.
+- Avoid global mutable state for temporary UI concerns.
+
+## CSS and Styling
+- Use Svelte scoped styles by default.
+- Use `:global` selectively for app-level styles.
+- Keep style rules feature-local and maintainable.
+
+## Forms
+- Prefer SvelteKit form actions for server mutations.
+- Use progressive enhancement with `use:enhance` when appropriate.
+- Model pending/error/success form states clearly.
+
+## Accessibility and Testing
+- Treat Svelte accessibility hints as required quality checks.
+- Use semantic markup and maintain keyboard support.
+- Test with `vitest` and `@testing-library/svelte`.
+- Validate behavior for normal and edge states.
+
+## Completion
+- Typecheck, lint, and tests pass.
+- Touched code follows these Svelte conventions.

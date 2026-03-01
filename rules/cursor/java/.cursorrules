@@ -1,0 +1,53 @@
+# Spring Boot Production Rules
+
+You are writing production Java services with Spring Boot 3.x.
+Prioritize explicit architecture, testability, and operational clarity.
+
+## Project Structure
+- Use package-by-feature structure (`feature/api`, `feature/service`, `feature/repo`).
+- Keep controllers thin and domain services focused.
+- Separate DTOs from entities and persistence models.
+
+## Dependency Injection
+- Use constructor injection only.
+- Do not use field injection.
+- Prefer `final` dependencies and immutable collaborators.
+
+## DTO and Model Conventions
+- Prefer Java `record` types for request/response DTOs.
+- Use classes only when mutable state or framework constraints require it.
+- Keep mapping explicit at boundaries.
+
+## Optional Discipline
+- Never call `Optional.get()` without prior presence checks.
+- Prefer `map`, `flatMap`, `orElse`, `orElseThrow`, and `ifPresent` patterns.
+- Return `Optional` from queries that may be absent; avoid null.
+
+## Error Handling
+- Centralize API exception mapping with `@ControllerAdvice`.
+- Return stable, typed error responses.
+- Do not leak internal exception details to clients.
+
+## Logging
+- Use SLF4J (`LoggerFactory`) for all logs.
+- Log structured context (ids, feature, operation).
+- Never log secrets, tokens, or full sensitive payloads.
+
+## Testing
+- Use JUnit 5 for unit/integration tests.
+- Use Mockito for collaborator mocking.
+- Test happy path, validation failure, and error behavior.
+
+## Build and Tooling
+- Follow Maven or Gradle conventions consistently within the repo.
+- Keep plugin/dependency config minimal and version-aligned.
+- Use Spring Boot 3.x compatible dependencies only.
+
+## Lombok Guidance
+- Use Lombok sparingly.
+- Prefer records and explicit code over heavy Lombok usage.
+- Avoid Lombok patterns that hide required behavior.
+
+## Done Criteria
+- Build, tests, and static checks pass.
+- New code follows injection, Optional, logging, and exception rules.

@@ -1,0 +1,46 @@
+# Windsurf Rules: Vue.js
+
+## Baseline
+- Write Vue 3 code that is composable, typed, and easy to evolve.
+- Favor explicit contracts over implicit framework magic.
+
+## Composition API
+- Use `<script setup lang="ts">` for all new components.
+- Avoid Options API in new code paths.
+- Extract reusable logic into composables before duplicating component code.
+- Keep templates declarative and move complex logic to composables.
+
+## Typing and Contracts
+- Define props with typed `defineProps<T>()`.
+- Define emits with typed `defineEmits<T>()`.
+- Avoid `any`; use clear interfaces and utility types.
+- Keep public component contracts stable and documented.
+
+## Reactivity Practices
+- Use `ref` for scalar or replaceable values.
+- Use `reactive` for grouped object state with shared lifecycle.
+- Preserve reactivity when destructuring via `toRefs`.
+- Use `computed` for derivations instead of manual synchronization.
+
+## Pinia and Router
+- Use Pinia as the default state management layer.
+- Keep store state serializable and action intent explicit.
+- Follow Vue Router conventions and prefer route-level code splitting.
+- Normalize route params before they reach domain logic.
+
+## Naming and File Layout
+- Component filenames use PascalCase.
+- Component tags in templates use kebab-case.
+- Composables use `useXxx.ts` naming.
+- Prefer feature-based directories for pages, components, stores, composables.
+
+## Testing and Tooling
+- Standard testing stack is Vitest + Vue Test Utils.
+- Cover behavior: props, emits, conditional rendering, async states.
+- Keep tests deterministic; mock only true external boundaries.
+- Use `unplugin-auto-import` and `unplugin-vue-components` with explicit config.
+- Keep auto-generated type declarations in sync with tooling.
+
+## Quality Gate
+- Run type-check, lint, and Vitest before completion.
+- New code must follow Composition API and typed component contracts.

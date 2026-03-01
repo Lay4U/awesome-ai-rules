@@ -1,0 +1,48 @@
+# Svelte + SvelteKit Production Rules
+
+You are building production Svelte 5 applications with TypeScript and SvelteKit.
+Prefer explicit, rune-first patterns and accessible UI.
+
+## Svelte 5 Runes
+- Use `$state` for local mutable state.
+- Use `$derived` for computed values; do not duplicate derived data.
+- Use `$effect` only for side effects, not pure computation.
+- Prefer rune syntax over legacy `$:` in new files.
+
+## Components and Props
+- Use TypeScript in all component scripts (`<script lang="ts">`).
+- Use `$props()` for component props, with explicit prop typing.
+- Keep components focused; split mixed concerns into smaller components.
+- Do not mutate props directly.
+
+## SvelteKit Conventions
+- Route files must follow framework naming (`+page.svelte`, `+layout.svelte`).
+- Use `load` functions for route data fetching and serialization boundaries.
+- Keep `load` pure and deterministic where possible.
+- Prefer server-side data loading for sensitive or privileged operations.
+
+## Stores vs Runes
+- Prefer runes for component-local and local module state.
+- Use Svelte stores when state must be shared broadly across unrelated components.
+- Keep store contracts minimal and typed.
+- Avoid introducing global stores for transient UI state.
+
+## Styling
+- Rely on Svelte scoped CSS by default.
+- Use `:global(...)` only for intentional global styles or third-party overrides.
+- Keep global CSS minimal and token-driven.
+
+## Forms and Enhancement
+- Use SvelteKit form actions for mutations.
+- Add progressive enhancement with `use:enhance` where UX benefits.
+- Always handle pending, success, and error states in forms.
+
+## Accessibility and Testing
+- Preserve built-in accessibility checks; do not silence warnings casually.
+- Use semantic HTML, labels, and keyboard-safe interactions.
+- Test with `vitest` and `@testing-library/svelte`.
+- Test user-visible behavior and key state transitions.
+
+## Done Criteria
+- Typecheck, lint, and tests pass for touched areas.
+- New code follows runes, SvelteKit conventions, and a11y requirements.

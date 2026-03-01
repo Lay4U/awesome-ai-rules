@@ -1,0 +1,54 @@
+# Windsurf Rules: Java Spring Boot
+
+## Baseline
+- Build Java services on Spring Boot 3.x.
+- Prioritize feature cohesion, explicit dependency wiring, and safe APIs.
+
+## Package Strategy
+- Organize code by feature, not by technical layer only.
+- Keep each feature self-contained with API, service, and persistence modules.
+- Keep cross-feature dependencies intentional and minimal.
+
+## Injection and Design
+- Use constructor injection exclusively.
+- Do not use field injection.
+- Keep dependencies immutable and explicit.
+
+## DTO and Model Patterns
+- Use records for DTOs whenever practical.
+- Keep JPA entities separate from API contracts.
+- Keep conversion logic explicit and testable.
+
+## Optional Rules
+- Represent missing values with `Optional` where appropriate.
+- Never call `Optional.get()` without a prior check.
+- Prefer safe combinators and `orElseThrow` for invalid absence.
+
+## Exception Handling
+- Use `@ControllerAdvice` for centralized exception handling.
+- Keep error responses consistent and sanitized.
+- Map domain errors to meaningful HTTP status codes.
+
+## Logging Practices
+- Use SLF4J as the logging facade.
+- Log actionable context (ids, operation, feature).
+- Avoid verbose noise and sensitive data leaks.
+
+## Testing Expectations
+- Use JUnit 5 for test execution.
+- Use Mockito for mocking dependencies.
+- Cover happy path, edge cases, and failure behavior.
+
+## Build Conventions
+- Follow Maven or Gradle conventions already present.
+- Keep builds reproducible and dependencies Boot 3.x compatible.
+- Do not add unnecessary plugins without justification.
+
+## Lombok Use
+- Keep Lombok usage minimal and deliberate.
+- Prefer records and explicit code for critical domain logic.
+- Avoid annotation-heavy designs that hide complexity.
+
+## Completion
+- Build and tests pass.
+- New code adheres to feature packaging and API safety rules.

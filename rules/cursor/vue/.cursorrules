@@ -1,0 +1,45 @@
+# Vue.js Production Rules
+
+You are writing production Vue 3 code. Optimize for clarity, type safety, and maintainability.
+
+## Vue Architecture
+- Use Composition API with `<script setup lang="ts">`.
+- Prefer composables for reusable behavior over mixins.
+- Keep components focused on presentation and orchestration.
+- Use Pinia for shared state; avoid ad hoc global singletons.
+
+## TypeScript Standards
+- Type all component props with `defineProps<...>()`.
+- Type emitted events with `defineEmits<...>()` signatures.
+- Avoid `any`; use explicit interfaces and utility types.
+- Keep API DTO types separate from UI view-model types.
+
+## Reactivity Rules
+- Use `ref` for primitives and replaceable values.
+- Use `reactive` for cohesive object graphs with stable identity.
+- Do not destructure reactive objects without preserving reactivity.
+- Derive view state with `computed` instead of duplicated refs.
+
+## Routing and State
+- Define Vue Router routes with lazy-loaded page components.
+- Keep route params typed and validated at boundaries.
+- Use navigation guards only for cross-cutting concerns.
+- Put business logic in Pinia stores or composables, not router files.
+
+## Naming and File Conventions
+- Component file names must be PascalCase (`UserCard.vue`).
+- Use kebab-case component tags in templates (`<user-card />`).
+- Name composables as `useXxx.ts`.
+- Co-locate component tests with component files when practical.
+
+## Tooling and Testing
+- Use auto-imports intentionally via `unplugin-auto-import` and `unplugin-vue-components`.
+- Keep auto-import config explicit and version-controlled.
+- Test components with Vitest + Vue Test Utils.
+- Cover props, emits, conditional rendering, and error states.
+- Mock network and router boundaries; keep UI logic tests deterministic.
+
+## Delivery Expectations
+- Run lint, type-check, and Vitest before completion.
+- Avoid Options API in new code unless required by legacy constraints.
+- Keep templates simple; move complexity into typed composables.

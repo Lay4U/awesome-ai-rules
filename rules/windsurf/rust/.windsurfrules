@@ -1,0 +1,49 @@
+# Windsurf Rules: Rust
+
+## Baseline
+- Produce Rust that is safe by default and simple to audit.
+- Prefer clear data flow over clever abstractions.
+
+## Borrowing and Lifetimes
+- Start with borrowed references before choosing ownership transfer.
+- Limit mutable access windows to reduce borrow conflicts.
+- Make lifetimes explicit when signatures are ambiguous.
+- Do not patch borrow errors with broad cloning.
+
+## Error Strategy
+- Use `Result<T, E>` for all recoverable failures.
+- Use `thiserror` for reusable library error enums.
+- Use `anyhow` for app-level glue code and command entrypoints.
+- Add contextual details at I/O, parsing, and network boundaries.
+- Disallow `unwrap()` in production code.
+- Prefer `?`; use `expect()` only with clear invariant text.
+
+## Matching and Control Flow
+- Keep pattern matching exhaustive and intentional.
+- Avoid `_` arms on domain enums unless future variants are truly irrelevant.
+- Use `let ... else` for early exits and reduced nesting.
+
+## Workspace and Quality Gates
+- Structure multi-crate projects as Cargo workspaces.
+- Keep shared crates framework-agnostic.
+- Format with `cargo fmt --all`.
+- Lint with `cargo clippy --all-targets --all-features -D warnings`.
+- Treat lint suppressions as exceptions requiring comments.
+
+## Unsafe Policy
+- Use `unsafe` only when benchmarked or API-constrained.
+- Encapsulate unsafe internals in small modules.
+- Add safety comments that state required invariants.
+- Validate unsafe assumptions with targeted tests.
+
+## Testing and Docs
+- Run `cargo test --workspace` before finishing.
+- Put integration tests in `tests/`.
+- Keep unit tests close to the module they verify.
+- Provide rustdoc on public APIs with short examples.
+- Ensure doc examples are accurate and compilable.
+
+## Implementation Style
+- Prefer iterator chains to manual indexing loops.
+- Keep functions small, typed, and single-purpose.
+- Favor explicit domain enums over stringly typed status values.
