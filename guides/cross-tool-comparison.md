@@ -1,7 +1,7 @@
 # AI Coding Tools Comparison (2026)
 
 ## Purpose
-This guide compares six common AI coding tools for day-to-day engineering work.
+This guide compares eight common AI coding tools for day-to-day engineering work.
 It focuses on practical tradeoffs: config model, autonomy, terminal access, and workflow fit.
 
 ## Feature Matrix
@@ -14,6 +14,8 @@ It focuses on practical tradeoffs: config model, autonomy, terminal access, and 
 | Windsurf | `.windsurfrules` | Yes | Yes | Cascade | Limited | Continuous flow with agent assistance |
 | Codex | `AGENTS.md` | Yes | Yes | Full agent | Yes | Autonomous repo edits with verification |
 | Gemini CLI | `GEMINI.md` | Yes | Yes | Full agent | Yes (1M tokens) | Google ecosystem and large-context CLI tasks |
+| Aider | `.aider.conf.yml` | Yes | Yes | architect/editor | Yes (BYOK) | Terminal pair programming |
+| Cline | `.clinerules` | Yes | Yes | VS Code agent | Yes (BYOK) | VS Code integrated workflows |
 
 ## Tool Notes
 
@@ -53,15 +55,27 @@ It focuses on practical tradeoffs: config model, autonomy, terminal access, and 
 - `GEMINI.md` allows project-specific coding policy.
 - Free tier with high token allowance is useful for experimentation.
 
+### Aider
+- Built for terminal-first pair programming with repo awareness.
+- Supports broad multi-file edits and iterative plan/apply loops.
+- Agent modes (`architect` and `editor`) separate planning from patching.
+- `BYOK` model access makes it cost-flexible for many setups.
+
+### Cline
+- Designed for in-editor agent workflows inside VS Code.
+- Handles multi-file edits with terminal-backed execution.
+- `.clinerules` keeps project policy close to the coding surface.
+- `BYOK` model support works well for teams that manage their own keys.
+
 ## Decision Tree: Which Tool Should You Use?
 1. Need fully autonomous terminal execution on repo tasks?
-- Choose Codex or Claude Code.
-2. Need a no-cost path with agentic CLI behavior?
-- Choose Codex or Gemini CLI.
-3. Need deep IDE-native inline assistance first?
+- Choose Codex, Claude Code, Gemini CLI, or Aider.
+2. Need no-cost `BYOK` terminal pair programming?
+- Choose Aider.
+3. Need deep VS Code-native agent workflow with `BYOK`?
+- Choose Cline.
+4. Need deep IDE-native inline assistance first?
 - Choose Cursor or Copilot.
-4. Need tight GitHub workflow and lightweight guidance?
-- Choose Copilot.
 5. Need large-context CLI sessions and Google ecosystem alignment?
 - Choose Gemini CLI.
 6. Need flow-centric IDE + agent blend?
@@ -82,21 +96,27 @@ It focuses on practical tradeoffs: config model, autonomy, terminal access, and 
 - Windsurf: `.windsurfrules`
 - Codex: `AGENTS.md`
 - Gemini CLI: `GEMINI.md`
+- Aider: `.aider.conf.yml`
+- Cline: `.clinerules`
 
 ### Preserve Behavior During Migration
 - Keep a stable definition of done across tools.
 - Keep test/lint/typecheck commands identical.
 - Port negative examples for known failure modes.
 - Re-check output format expectations.
+- Preserve terminal permission boundaries when moving between CLI and IDE agents.
 
 ### Avoid Common Migration Mistakes
 - Do not copy huge prompts into every tool file.
 - Do not rely on tool-specific jargon in shared rules.
 - Do not skip verification just because outputs look plausible.
 - Do not mix conflicting style standards across tools.
+- Do not forget `BYOK` key management and model-default differences.
 
 ## Quick Recommendations By Scenario
 - Large refactor across many files with terminal checks: Codex or Claude Code.
+- Terminal pair programming with explicit architect/editor loop: Aider.
+- VS Code-integrated agentic workflow with terminal access: Cline.
 - Fast inline coding in existing IDE workflow: Copilot.
 - IDE-first with broader agent help: Cursor.
 - Flow-state coding with persistent support: Windsurf.

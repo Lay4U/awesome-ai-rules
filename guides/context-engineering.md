@@ -11,8 +11,20 @@ Why it matters in 2026:
 Two references that capture this moment:
 - Andrej Karpathy: "The hottest new programming language is English."
 - Shopify CEO Tobi Lutke has emphasized AI fluency as a baseline expectation for teams.
+
 ## The 4 Layers Of Context
 Use four layers from stable policy to dynamic runtime evidence.
+
+```mermaid
+flowchart TD
+    A[Project Rules] --> B[Task Context]
+    B --> C[Conversation]
+    C --> D[Tool Results]
+    A -. constrains .-> C
+    A -. constrains .-> D
+    B -. scopes .-> D
+```
+
 ### Layer 1: Project Rules
 Examples: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `copilot-instructions.md`.
 Purpose: define durable standards that should hold for every task.
@@ -22,6 +34,7 @@ Best practices:
 - Keep each rule atomic, concrete, and testable.
 - Use consistent modal language (`must`, `should`, `may`).
 - End with definition-of-done checks.
+
 ### Layer 2: Task Context
 Purpose: translate one request into precise execution constraints.
 Best practices:
@@ -30,6 +43,7 @@ Best practices:
 - State out-of-scope areas explicitly.
 - Include acceptance criteria and required validation commands.
 - Add performance/compatibility constraints when relevant.
+
 ### Layer 3: Conversation History
 Purpose: preserve assumptions, clarifications, and chosen approaches during collaboration.
 Best practices:
@@ -37,6 +51,7 @@ Best practices:
 - Confirm assumptions before broad edits.
 - Record approved exceptions explicitly.
 - Do not rely on implicit memory for critical constraints.
+
 ### Layer 4: Tool Results
 Purpose: provide objective evidence from command execution and code changes.
 Typical inputs: tests, lints, typechecks, logs, and diff summaries.
@@ -45,6 +60,7 @@ Best practices:
 - Re-run relevant checks after edits.
 - Report key evidence with file-level precision.
 - Separate observed facts from inferred causes.
+
 ## Layer Precedence And Conflict Handling
 Recommended precedence:
 1. Project rules.
@@ -60,88 +76,150 @@ Working heuristic:
 - Layer 2 sets mission.
 - Layer 3 sets coordination.
 - Layer 4 validates reality.
+
+## Decision Tree: Which Tool To Use
+Use this decision path when choosing execution mode and integration surface.
+
+```mermaid
+flowchart TD
+    Q1{Need terminal command execution?}
+    Q1 -->|Yes| Q2{Need deep IDE integration first?}
+    Q1 -->|No| Q3{Need inline completion speed?}
+    Q2 -->|Yes| T1[Use IDE agent + terminal-capable tool]
+    Q2 -->|No| T2[Use CLI-first autonomous agent]
+    Q3 -->|Yes| T3[Use editor-native assistant]
+    Q3 -->|No| T4[Use workspace agent for multi-file edits]
+```
+
+## Typical Session Context Flow
+This sequence shows how context is assembled and validated during a standard coding task.
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant A as AI Agent
+    participant R as Project Rules
+    participant T as Task Context
+    participant S as Shell/Tools
+    participant C as Codebase
+
+    U->>A: Submit task request
+    A->>R: Load durable project policy
+    A->>T: Parse goals and constraints
+    A->>C: Read relevant files
+    A->>A: Plan edits using rules + task
+    A->>C: Apply code changes
+    A->>S: Run tests/lint/typecheck
+    S-->>A: Return evidence and errors
+    A->>C: Patch issues if needed
+    A-->>U: Report results with verification
+```
+
 ## Best Practices Per Layer
 ### Project Rules Checklist
 - One-line role definition.
 - Clear constraints for typing, testing, style, and error handling.
 - Concise conventions for naming and module boundaries.
 - Executable definition of done.
+
 ### Task Context Checklist
 - Exact objective.
 - Target file list.
 - Non-goals and boundaries.
 - Acceptance tests.
 - Required commands.
+
 ### Conversation Checklist
 - Track unresolved questions.
 - Confirm decisions before large edits.
 - Reconfirm plan after requirement changes.
+
 ### Tool Results Checklist
 - Run relevant checks.
 - Capture failing command + key error lines.
 - Report passes and failures.
 - Re-test after fixes.
+
 ## Common Patterns
 ### Pattern: Few-Shot Examples In Rules
 Use a small example when a rule is likely to be misinterpreted.
 Keep examples short, realistic, and focused on high-impact behavior.
 Do not fill rules files with tutorial-style content.
+
 ### Pattern: Negative Examples
 State what to avoid for recurring mistakes.
 Examples: avoid `any` in TypeScript public APIs; avoid broad Python exception catches without context/re-raise.
 Negative examples reduce plausible but undesirable shortcuts.
+
 ### Pattern: Explicit Role Definitions
 Start rule files with one clear role sentence.
 This reduces drift between assistant-like responses and agent-like execution behavior.
+
 ### Pattern: Definition Of Done
 End with commands and verification expectations.
 Definition-of-done criteria should be objective and executable.
+
 ## Anti-Patterns
 ### Anti-Pattern: Overly Long Rules
 Symptoms: key constraints buried; low adherence.
 Fix: keep core rules short, move rationale to guides, prune duplicates regularly.
+
 ### Anti-Pattern: Conflicting Instructions
 Symptoms: inconsistent outputs across similar tasks.
 Fix: add precedence rules, remove duplicated constraints, standardize wording.
+
 ### Anti-Pattern: Vague Instructions
 Symptoms: broad phrases like "write clean code" without checks.
 Fix: replace with concrete requirements tied to commands and outputs.
+
 ### Anti-Pattern: Tool-Blind Guidance
 Symptoms: rules assume identical capabilities across tools.
 Fix: add tool-specific notes while keeping shared policy portable.
+
 ## Tool-Specific Tips
 ### Cursor
 - Keep `.cursorrules` compact and high signal.
 - Focus on codebase conventions and file-scope boundaries.
 - Use short examples for recurring refactors.
+
 ### Claude Code
 - Put durable policy in `CLAUDE.md`.
 - Define terminal workflow and validation commands.
 - Require explicit reporting when checks are skipped.
+
 ### GitHub Copilot
 - Put repo policy in `copilot-instructions.md`.
 - Keep instructions concise for inline generation.
 - Enforce quality with CI rather than long prose.
+
 ### Codex
 - Put durable policy in `AGENTS.md`.
 - Define autonomy boundaries and escalation triggers.
 - Require command-backed verification.
+
 ### Gemini CLI
 - Put durable policy in `GEMINI.md`.
 - Specify typing, testing, style, and error handling conventions.
 - Keep guidance short and operational.
+
 ## Template For Effective Rules
 Use this structure: Role, Constraints, Conventions, Examples, Definition of Done.
+
 ### Role
 State who the agent is and what it should optimize.
+
 ### Constraints
 List non-negotiable requirements and safety boundaries.
+
 ### Conventions
 Specify naming, style, architecture, testing, and error-handling norms.
+
 ### Examples
 Add one positive and one negative example for nuanced standards.
+
 ### Definition Of Done
 List required commands and required evidence.
+
 ## Minimal Template Example
 ```md
 # Project Rules
@@ -162,12 +240,14 @@ List required commands and required evidence.
 - `pnpm test`
 - `pnpm lint`
 ```
+
 ## Rollout Plan
 1. Start with one language-specific rules file.
 2. Add explicit definition-of-done commands.
 3. Pilot on several real tasks.
 4. Measure rework and review friction.
 5. Tighten ambiguous sections every two weeks.
+
 ## Final Checklist
 - Rules are concise, concrete, and non-conflicting.
 - Task prompts include acceptance criteria.
