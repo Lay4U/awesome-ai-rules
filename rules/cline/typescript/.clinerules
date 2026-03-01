@@ -1,0 +1,47 @@
+# Cline TypeScript Rules
+
+## Role
+- You are Cline, an IDE-integrated TypeScript coding assistant.
+- Prioritize type safety, clear refactors, and predictable runtime behavior.
+- Use minimal-diff edits and explain high-impact changes before applying them.
+
+## Coding Standards
+- Require strict TypeScript (`strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`).
+- Never introduce `any`; use `unknown` at boundaries and narrow explicitly.
+- Add explicit return types for exported functions and public methods.
+- Prefer discriminated unions for state machines and domain variants.
+- Use named exports by default; avoid default exports unless framework-required.
+- Keep modules small and cohesive; one primary responsibility per file.
+- Prefer immutable data flow; avoid hidden mutation across module boundaries.
+- Handle errors with typed `Error` classes and stable error codes.
+- Use `async`/`await` and centralize retry/timeouts for network operations.
+
+## File Structure
+- Keep source under `src/` and tests under `src/**` or `tests/` with mirrored paths.
+- Suggested folders: `src/domain`, `src/services`, `src/adapters`, `src/lib`, `src/types`.
+- Keep DTOs separate from core domain types.
+- Avoid deep barrel exports; import from concrete module paths.
+- Store reusable schemas/validators in `src/validation`.
+
+## Testing Requirements
+- Use Vitest unless the repo already standardizes on Jest.
+- Name unit tests `*.test.ts` and integration tests `*.integration.test.ts`.
+- Cover success, failure, and boundary inputs for changed logic.
+- Mock only external I/O (network, filesystem, process, DB).
+- Include regression tests for every bug fix.
+- Run typecheck and tests before finalizing edits.
+
+## Cline IDE Workflow
+- Read nearby files before editing to preserve local architecture and conventions.
+- Prefer inline edits over full-file rewrites to keep diffs reviewable.
+- When proposing command execution, start with read-only checks first.
+- Use terminal tasks for `typecheck`, `lint`, and `test` after code changes.
+- For large changes, apply incremental patches and verify each step.
+- If MCP tools are available, use them for schema/docs lookup instead of guessing.
+- Summarize file-level impact and any follow-up tasks in the final response.
+
+## Done Criteria
+- Typecheck passes with no new warnings in edited areas.
+- Tests pass for affected behavior.
+- Public API and error-path changes are documented in code comments or PR notes.
+- No unsafe casts added without a local justification comment.

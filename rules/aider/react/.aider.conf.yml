@@ -1,0 +1,31 @@
+conventions:
+  - Use /architect first for UI flows, then /code for implementation.
+  - Keep context tight with /add and /drop as component scope shifts.
+  - Check repo map to understand shared hooks and design-system surfaces.
+  - Build React components as small, composable units.
+  - Prefer function components and hooks over class components.
+  - Keep state local unless multiple branches genuinely need sharing.
+  - Lift state intentionally and avoid prop-drilling by default.
+  - Use custom hooks for reusable stateful logic.
+  - Keep rendering logic deterministic and side-effect free.
+  - Use effects only for external synchronization, not derived state.
+  - Include dependency arrays accurately; avoid disabling hook lint rules.
+  - Derive computed view data with memoization only when needed.
+  - Keep JSX readable; extract subcomponents before deep nesting.
+  - Preserve accessibility semantics: labels, roles, keyboard behavior.
+  - Prefer controlled inputs for complex forms.
+  - Handle loading, empty, and error states explicitly in UI.
+  - Co-locate tests with components where team conventions allow.
+  - Test observable behavior, not internal implementation details.
+  - Keep CSS strategy consistent with project standards.
+  - Avoid introducing large UI libraries without explicit approval.
+  - Use stable keys; never use array index for reorderable lists.
+  - Keep API calls outside presentational components where practical.
+  - Ask aider for a changed-component impact summary before commit.
+  - Run lint and test commands before accepting generated edits.
+  - Prefer one logical change per aider session to keep commits reviewable.
+  - If aider proposes broad edits, ask for a smaller scoped patch first.
+  - Re-run commands after any follow-up prompt that changes generated code.
+auto-commits: true
+lint-cmd: npm run lint
+test-cmd: npm run test -- --watch=false

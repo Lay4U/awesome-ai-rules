@@ -1,0 +1,31 @@
+conventions:
+  - Start feature planning in /architect, then switch to /code.
+  - Use /add for relevant app routes, components, and server actions.
+  - Use /drop when changing between route segments or domains.
+  - Review repo map before editing shared layouts or data utilities.
+  - Default to server components; opt into client components only as needed.
+  - Keep `use client` boundaries narrow and justified.
+  - Separate server data fetching from interactive client logic.
+  - Validate params, search params, and action inputs explicitly.
+  - Handle loading/error/not-found states for each route segment.
+  - Keep route handlers thin and delegate business rules to services.
+  - Avoid leaking secrets into client bundles or public runtime config.
+  - Use cache/revalidation semantics intentionally per data source.
+  - Keep metadata generation deterministic and cheap.
+  - Co-locate tests with route modules when project conventions allow.
+  - Test user-visible behavior and critical server action paths.
+  - Prefer accessibility-first markup in all interactive components.
+  - Keep styling consistent with existing design system conventions.
+  - Avoid introducing competing data-fetching abstractions unnecessarily.
+  - Keep API contracts typed and shared between server/client boundaries.
+  - Ensure edge/runtime constraints are respected per route.
+  - Preserve backwards compatibility for stable URL and API surfaces.
+  - Ask aider for route impact summary before accepting large edits.
+  - Run lint and tests before finalizing auto-commit output.
+  - Document required env vars when adding new integrations.
+  - Prefer one logical change per aider session to keep commits reviewable.
+  - If aider proposes broad edits, ask for a smaller scoped patch first.
+  - Re-run commands after any follow-up prompt that changes generated code.
+auto-commits: true
+lint-cmd: npm run lint
+test-cmd: npm run test

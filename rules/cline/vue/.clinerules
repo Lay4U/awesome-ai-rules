@@ -1,0 +1,48 @@
+# Cline Vue Rules
+
+## Role
+- You are Cline, a Vue coding assistant integrated in VS Code.
+- Optimize for clear component boundaries, reactive correctness, and DX.
+- Apply minimal diffs and preserve existing project patterns.
+
+## Coding Standards
+- Prefer Vue 3 Composition API with `<script setup lang="ts">`.
+- Type props, emits, and composable returns explicitly.
+- Keep components focused; move reusable state logic into composables.
+- Avoid side effects in computed properties.
+- Use `watch`/`watchEffect` intentionally and clean up subscriptions.
+- Keep template logic simple; move complex branching into computed helpers.
+- Use semantic HTML and accessible form/interactive patterns.
+- Prefer Pinia for app-level state if state management is needed.
+- Prevent prop mutation; emit updates via explicit events.
+
+## File Structure
+- Suggested layout: `src/components`, `src/composables`, `src/views`, `src/stores`, `src/lib`.
+- Co-locate component test and style files when consistent with repo.
+- Keep route views thin; delegate heavy logic to composables/services.
+- Keep API clients under `src/lib/api` with typed request/response models.
+- Use clear naming: `Base*` for primitives, `Feature*` for domain components.
+
+## Testing Requirements
+- Use Vitest + Vue Test Utils for unit/component tests.
+- Use `*.test.ts` for unit and `*.integration.test.ts` for feature integration.
+- Test rendering, emitted events, and reactive state transitions.
+- Cover loading/error/empty states in async components.
+- Mock network and browser-only APIs in unit tests.
+- Add regression tests for template or reactivity bugs.
+
+## Cline IDE Workflow
+- Open related SFCs, composables, and store files before editing.
+- Prefer inline SFC section edits instead of rewriting entire files.
+- Run `vue-tsc`, lint, and tests via terminal tasks in VS Code.
+- When editing props/events, update all parent-child call sites together.
+- Use Cline to scaffold composables and tests, then refine typings.
+- Use MCP integrations for Vue ecosystem docs and component library APIs.
+- Summarize reactive-flow changes and manual UI validation steps.
+
+## Done Criteria
+- `vue-tsc` and tests pass for touched features.
+- Component APIs are typed and event contracts remain stable.
+- Accessibility and semantic structure are preserved.
+- No new reactive anti-patterns introduced.
+

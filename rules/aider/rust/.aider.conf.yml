@@ -1,0 +1,31 @@
+conventions:
+  - Use /architect for design decisions, then /code to implement.
+  - Keep context lean using /add and /drop as modules change.
+  - Read repo map before touching shared traits or crate boundaries.
+  - Prefer explicit ownership and borrowing over cloning by default.
+  - Minimize `unwrap`/`expect` outside tests and startup code.
+  - Return rich error types and propagate with `?` consistently.
+  - Keep public APIs small, documented, and semver-aware.
+  - Use enums for domain state and illegal-state prevention.
+  - Prefer iterator adapters when they improve clarity.
+  - Avoid premature async adoption without I/O concurrency needs.
+  - Separate parsing/validation from business transformations.
+  - Keep feature flags additive and test default + full feature sets.
+  - Maintain module privacy; expose only required items.
+  - Prefer newtypes for strongly-typed domain identifiers.
+  - Write unit tests for pure logic and integration tests for workflows.
+  - Use property tests when invariants matter.
+  - Avoid unsafe blocks unless justified and documented.
+  - Keep lifetimes explicit where inference hurts readability.
+  - Use `#[derive]` strategically; avoid magic-heavy macros.
+  - Keep serde wire structs separate from internal domain models.
+  - Ask aider to summarize borrow/lifetime risk areas before commit.
+  - Run clippy and tests before accepting final patch.
+  - Keep rustfmt-consistent style without manual alignment churn.
+  - Update benchmarks when performance-sensitive paths change.
+  - Prefer one logical change per aider session to keep commits reviewable.
+  - If aider proposes broad edits, ask for a smaller scoped patch first.
+  - Re-run commands after any follow-up prompt that changes generated code.
+auto-commits: true
+lint-cmd: cargo clippy --all-targets --all-features -- -D warnings
+test-cmd: cargo test --all-features

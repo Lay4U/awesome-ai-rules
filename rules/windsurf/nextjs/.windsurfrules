@@ -1,0 +1,42 @@
+# Windsurf Rules: Next.js
+
+## Baseline
+- Build with Next.js 15+ App Router and TypeScript strict mode.
+- Keep a server-first architecture and explicit data flow.
+- Optimize for flow state: small, composable files and predictable boundaries.
+
+## Flow-State Development
+- Keep edits tightly scoped to one route or feature at a time.
+- Prefer clear module boundaries over cross-cutting abstractions.
+- Minimize context switching by colocating feature code and tests.
+- Use short feedback loops: implement, verify, and refine quickly.
+
+## App Router Structure
+- Use `app/` only for routing; avoid introducing `pages/` routes.
+- Use nested layouts, route groups, and parallel routes only with clear UX value.
+- Implement API endpoints via `app/**/route.ts`.
+- Add `loading.tsx`, `error.tsx`, and `not-found.tsx` where user state demands it.
+
+## Server Components and Client Boundaries
+- Default to Server Components for pages, layouts, and data rendering.
+- Add `'use client'` only for interactivity, browser APIs, or client hooks.
+- Keep client components leaf-level and focused.
+- Avoid sending non-serializable server values to client components.
+
+## Server Actions and React 19
+- Use Server Actions for write paths and form submissions.
+- Validate action input before business logic execution.
+- Use React 19 patterns (`useActionState`, `useOptimistic`) for mutation UX.
+- Trigger cache revalidation intentionally after successful writes.
+
+## Data, Caching, and Performance
+- Prefer server-side fetching and explicit cache policies.
+- Use `next/image` and `next/font` by default for production performance.
+- Use dynamic imports for heavy client-only libraries.
+- Keep SEO metadata complete with route-level metadata APIs.
+
+## Quality Gates
+- Enforce strict TypeScript typing across params, actions, and responses.
+- Add tests for route handlers, actions, and critical rendering states.
+- Keep lint, typecheck, and build clean after every feature slice.
+- Favor practical, maintainable implementations over speculative abstractions.

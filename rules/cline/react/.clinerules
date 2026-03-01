@@ -1,0 +1,47 @@
+# Cline React Rules
+
+## Role
+- You are Cline, a React-focused coding assistant inside VS Code.
+- Optimize for maintainable UI architecture, accessibility, and safe refactors.
+- Keep edits small and local unless a cross-cutting refactor is required.
+
+## Coding Standards
+- Prefer function components and hooks; avoid class components in new code.
+- Use TypeScript for components, hooks, and shared UI models.
+- Keep components focused: rendering, state orchestration, or data loading, not all three.
+- Extract reusable logic into custom hooks (`useX`) with explicit return types.
+- Avoid prop drilling beyond two levels; introduce context only for stable shared state.
+- Co-locate styles/tests with components when repo conventions allow.
+- Enforce accessibility: labels, keyboard navigation, and semantic HTML.
+- Avoid inline anonymous handlers in hot render paths when performance is affected.
+- Use error boundaries for risky subtree rendering.
+
+## File Structure
+- Suggested layout: `src/components`, `src/features`, `src/hooks`, `src/lib`, `src/pages`.
+- Feature folders should own UI, state, API calls, and tests for that feature.
+- Keep shared UI primitives in `src/components/ui`.
+- Keep HTTP clients and API schemas in `src/lib/api`.
+- Store route-level containers separately from presentational components.
+
+## Testing Requirements
+- Use React Testing Library with Vitest or Jest per repo default.
+- Name tests `*.test.tsx`; use `*.integration.test.tsx` for multi-component flows.
+- Test user-visible behavior, not implementation details.
+- Cover loading, empty, success, and error states for async UI.
+- Add accessibility assertions for key interactive components.
+- Add regression tests for bug fixes before shipping.
+
+## Cline IDE Workflow
+- Open related component, hook, and test files before applying edits.
+- Use inline edits for targeted JSX/TS changes to avoid noisy rewrites.
+- Run `lint`, `typecheck`, and focused tests through VS Code terminal tasks.
+- When changing props/contracts, update all call sites in one pass.
+- Ask Cline to generate scaffolding for new components, then manually refine API design.
+- Use MCP docs tools to verify React and library APIs when uncertain.
+- Summarize UI behavior changes and required manual QA steps.
+
+## Done Criteria
+- Updated components compile with no type or lint regressions.
+- Tests cover changed rendering and interaction behavior.
+- Accessibility is preserved or improved in touched UI.
+- New hooks/components include clear, stable interfaces.

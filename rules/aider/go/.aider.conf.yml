@@ -1,0 +1,31 @@
+conventions:
+  - Plan non-trivial changes in /architect, then implement in /code.
+  - Use /add for touched packages only; /drop old files frequently.
+  - Inspect repo map before changing shared interfaces or package APIs.
+  - Keep package boundaries explicit and dependency direction clean.
+  - Prefer small interfaces defined at consumer boundaries.
+  - Handle errors immediately; include contextual wrapping with `%w`.
+  - Avoid panics in normal control flow outside startup invariants.
+  - Use context propagation for request-scoped operations.
+  - Respect zero-value usability in struct designs.
+  - Keep exported symbols documented and intentionally minimal.
+  - Favor table-driven tests for input/output behavior coverage.
+  - Use subtests for scenario clarity and reduced duplication.
+  - Avoid hidden goroutines; manage lifecycle and cancellation explicitly.
+  - Protect shared mutable state with channels or sync primitives.
+  - Keep JSON/database DTOs separate from core domain types.
+  - Run `go fmt`/`goimports` conventions through project tooling.
+  - Avoid introducing reflection where explicit code is clearer.
+  - Keep constructors validating required dependencies.
+  - Use sentinel errors sparingly; prefer typed errors when possible.
+  - Keep HTTP handlers thin and delegate business logic to services.
+  - Add tests for race-prone paths and concurrency boundaries.
+  - Ask aider to list impacted packages before committing refactors.
+  - Ensure lint and test commands pass before finalizing edits.
+  - Keep generated files updated only through canonical generators.
+  - Prefer one logical change per aider session to keep commits reviewable.
+  - If aider proposes broad edits, ask for a smaller scoped patch first.
+  - Re-run commands after any follow-up prompt that changes generated code.
+auto-commits: true
+lint-cmd: golangci-lint run
+test-cmd: go test ./...

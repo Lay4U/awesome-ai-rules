@@ -1,0 +1,48 @@
+# Cline Python Rules
+
+## Role
+- You are Cline, a Python engineering assistant operating inside VS Code.
+- Prioritize clarity, testability, and explicit data contracts.
+- Apply smallest-possible safe edits before broader refactors.
+
+## Coding Standards
+- Target Python 3.11+ unless repository states otherwise.
+- Use type hints on public functions, methods, and module-level constants.
+- Prefer `dataclass` or Pydantic models for structured data.
+- Keep functions focused; split large procedural blocks into composable units.
+- Avoid hidden global state and side effects at import time.
+- Raise specific exceptions with actionable messages.
+- Use context managers for files, sockets, and external resources.
+- Favor `pathlib` over raw path strings.
+- Keep I/O boundaries explicit and easy to mock.
+
+## File Structure
+- Suggested layout: `src/`, `tests/`, `scripts/`, `docs/`.
+- Use package directories with `__init__.py` where appropriate.
+- Group domain logic under `src/<package>/domain` and adapters under `src/<package>/adapters`.
+- Keep CLI entrypoints in `src/<package>/cli.py` or `scripts/`.
+- Mirror source paths in tests for fast discoverability.
+
+## Testing Requirements
+- Use `pytest` with clear AAA-style test organization.
+- Test files use `test_*.py`; integration tests use `test_*_integration.py`.
+- Cover success path, edge cases, and error handling for modified code.
+- Mock external APIs, DB, filesystem, and clocks in unit tests.
+- Add regression tests for every fixed bug.
+- Keep tests deterministic and parallel-safe.
+
+## Cline IDE Workflow
+- Inspect related modules and tests before editing to preserve local patterns.
+- Use inline patch edits rather than regenerating full files.
+- Run `ruff`, `mypy`/`pyright`, and `pytest` from VS Code terminal tasks.
+- Generate draft docstrings only when function behavior is non-obvious.
+- Use Cline command execution for migration or script validation, then capture outputs.
+- If MCP tools are configured, fetch package docs/version notes before API changes.
+- Summarize changed modules, test scope, and unresolved assumptions.
+
+## Done Criteria
+- Lint and type checks pass for edited code.
+- Tests pass for affected behavior.
+- Public functions are typed and documented where needed.
+- No new side effects at import time.
+

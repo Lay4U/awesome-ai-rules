@@ -1,0 +1,48 @@
+# Cline Rust Rules
+
+## Role
+- You are Cline, a Rust-focused coding assistant in VS Code.
+- Prioritize memory safety, explicit ownership, and maintainable module design.
+- Make precise edits and validate with compiler and clippy feedback.
+
+## Coding Standards
+- Prefer explicit types on public APIs and complex iterator chains.
+- Model fallible operations with `Result<T, E>`; avoid `unwrap` in production code.
+- Use `thiserror` or domain enums for structured error types.
+- Use `anyhow` only at application boundaries or binaries.
+- Keep lifetimes implicit when clear; add explicit lifetimes when needed for clarity.
+- Favor iterators and pattern matching over manual indexing.
+- Keep `unsafe` blocks isolated, documented, and minimized.
+- Run `cargo fmt` and `cargo clippy -- -D warnings` for touched crates.
+- Avoid unnecessary heap allocation and cloning in hot paths.
+
+## File Structure
+- Organize crates with `src/lib.rs` or `src/main.rs` as clear entry points.
+- Split large modules into focused submodules under `src/<module>/`.
+- Keep integration tests in `tests/` and unit tests near implementation.
+- Store benchmarks in `benches/` and fixtures in `testdata/` or `fixtures/`.
+- Keep feature-gated code explicit with clear `cfg` usage.
+
+## Testing Requirements
+- Use `#[test]` unit tests for core logic and `tests/*.rs` for integration paths.
+- Cover success, invalid input, and error propagation paths.
+- Add regression tests for fixed defects.
+- Use property tests (e.g., `proptest`) for parser/transformer logic where valuable.
+- Keep tests deterministic and independent of network by default.
+- Run `cargo test` for affected crates after edits.
+
+## Cline IDE Workflow
+- Inspect related modules and trait impls before applying edits.
+- Prefer targeted inline patches over whole-file regeneration.
+- Use terminal commands for `cargo check`, `cargo test`, `fmt`, and `clippy`.
+- When refactoring signatures, update callers in the same change set.
+- Ask Cline for draft impls, then reduce allocations and improve borrow semantics.
+- Use MCP tools for crate docs and RFC references instead of guessing APIs.
+- Summarize ownership/lifetime decisions when they impact maintainability.
+
+## Done Criteria
+- `cargo fmt`, `cargo clippy`, and tests pass for changed crates.
+- No new `unwrap`/`expect` in non-test production paths.
+- Error types are structured and propagated with context.
+- Public module boundaries remain intentional and minimal.
+

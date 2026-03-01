@@ -1,0 +1,48 @@
+# Cline Java Rules
+
+## Role
+- You are Cline, a Java coding assistant inside VS Code.
+- Prioritize readability, explicit architecture boundaries, and robust tests.
+- Keep diffs scoped and avoid unnecessary framework-level rewrites.
+
+## Coding Standards
+- Target the repository's declared Java version; default to Java 21 if unspecified.
+- Prefer immutable value objects and constructor injection.
+- Keep classes single-purpose and methods short.
+- Use interfaces for boundaries that need substitution or testing.
+- Avoid static mutable state.
+- Validate external input at API boundaries.
+- Use structured exceptions with meaningful messages and context.
+- Prefer `Optional` for absent return values, not for fields/serialization models.
+- Enforce formatting/linting with project tooling (Spotless/Checkstyle if present).
+
+## File Structure
+- Keep source in `src/main/java` and tests in `src/test/java`.
+- Group by feature/domain package, not by technical layer only.
+- Suggested packages: `api`, `service`, `domain`, `repository`, `config`.
+- Keep DTOs separate from domain models.
+- Place integration test fixtures under `src/test/resources`.
+
+## Testing Requirements
+- Use JUnit 5 for unit and integration tests.
+- Name tests `*Test.java`; integration tests `*IT.java` if repo follows that pattern.
+- Cover happy path, validation failure, and exception mapping.
+- Mock external systems with Mockito/Testcontainers according to scope.
+- Add regression tests for bug fixes.
+- Keep unit tests isolated; reserve DB/network for integration tests.
+
+## Cline IDE Workflow
+- Read related classes/interfaces/tests before editing to preserve contracts.
+- Use inline edits and keep imports/package declarations correct.
+- Run `./gradlew test` or `mvn test` and targeted module checks in terminal.
+- Regenerate code (if Lombok/mapstruct/openapi) only when necessary.
+- Use Cline to draft tests, then strengthen assertions and fixture quality.
+- If MCP tools are available, verify framework API usage against official docs.
+- Summarize class-level impact and any migration/refactor notes.
+
+## Done Criteria
+- Project compiles and tests pass in affected modules.
+- Public APIs and exception behavior are explicitly tested.
+- Package structure remains coherent and domain-oriented.
+- No new warnings from formatter/linter/static analysis in touched code.
+

@@ -1,0 +1,31 @@
+conventions:
+  - Begin with /architect for feature slicing, then /code to build.
+  - Use /add to focus on impacted components, stores, and tests.
+  - Use /drop aggressively when switching feature areas.
+  - Review repo map before editing shared composables or stores.
+  - Use Composition API patterns consistently within the codebase.
+  - Keep component responsibilities narrow and easy to reason about.
+  - Extract reusable logic into composables, not mixins.
+  - Keep props and emits fully typed where TypeScript is enabled.
+  - Validate external inputs at API boundaries before state updates.
+  - Avoid mutating props directly; derive local state explicitly.
+  - Keep template expressions simple; move complexity to script.
+  - Handle loading/empty/error UI states in every async view.
+  - Use computed values for derived state, not imperative sync code.
+  - Keep watchers targeted and cleanup side effects reliably.
+  - Use store actions for side effects, getters for derivations.
+  - Preserve accessibility semantics and keyboard interactions.
+  - Avoid tightly coupling components to global store internals.
+  - Write tests for user-visible behavior and critical composables.
+  - Prefer deterministic component tests over snapshot-heavy suites.
+  - Keep CSS scope strategy consistent with project conventions.
+  - Avoid introducing alternative state libraries without approval.
+  - Ask aider for changed-route and changed-store impact summary.
+  - Run lint and tests before finalizing generated changes.
+  - Keep migration notes when route/store contracts change.
+  - Prefer one logical change per aider session to keep commits reviewable.
+  - If aider proposes broad edits, ask for a smaller scoped patch first.
+  - Re-run commands after any follow-up prompt that changes generated code.
+auto-commits: true
+lint-cmd: npm run lint
+test-cmd: npm run test -- --run

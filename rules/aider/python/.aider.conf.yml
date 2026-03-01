@@ -1,0 +1,31 @@
+conventions:
+  - Start multi-file tasks in /architect and execute in /code.
+  - Use /add for only affected modules and tests; /drop stale context.
+  - Review repo map before package-wide moves or API redesigns.
+  - Target modern Python typing in all new or changed code.
+  - Add type hints for function parameters and return values.
+  - Prefer `pathlib.Path` over string-based path manipulation.
+  - Keep functions small and focused on one responsibility.
+  - Isolate side effects from core domain logic.
+  - Raise specific exceptions instead of broad generic errors.
+  - Avoid bare `except`; catch concrete error types.
+  - Use dataclasses or pydantic models when structured data is central.
+  - Keep module public APIs explicit via `__all__` when appropriate.
+  - Avoid global mutable state unless required by framework lifecycle.
+  - Use dependency injection for external services in testable code.
+  - Write pytest tests for success, failure, and edge conditions.
+  - Prefer fixtures for shared setup instead of duplicated scaffolding.
+  - Mock only network, filesystem, and process boundaries.
+  - Keep docstrings concise and accurate for public interfaces.
+  - Maintain import hygiene and remove dead code promptly.
+  - Keep CLI and API boundary validation explicit and early.
+  - Never commit debugging prints; use structured logging.
+  - Ask aider for impacted modules before accepting broad refactors.
+  - Run lint and tests locally before finalizing commit.
+  - Keep migrations/version bumps in the same logical change.
+  - Prefer one logical change per aider session to keep commits reviewable.
+  - If aider proposes broad edits, ask for a smaller scoped patch first.
+  - Re-run commands after any follow-up prompt that changes generated code.
+auto-commits: true
+lint-cmd: ruff check .
+test-cmd: pytest -q

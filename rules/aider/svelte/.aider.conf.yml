@@ -1,0 +1,31 @@
+conventions:
+  - Plan architecture in /architect, then implement in /code.
+  - Add only relevant routes/components with /add and prune via /drop.
+  - Use repo map before changing shared stores or layout hierarchies.
+  - Keep Svelte components focused with clear input/output contracts.
+  - Prefer reactive declarations for simple derived values.
+  - Avoid overusing reactive chains when a store/computed helper fits.
+  - Keep writable stores minimal and encapsulate update logic.
+  - Use derived stores for projections instead of duplicate state.
+  - Validate data from APIs/forms before mutating app state.
+  - Handle loading, empty, and error states in route-level views.
+  - Keep DOM event handlers small and delegate complex logic.
+  - Avoid direct DOM manipulation unless framework escape hatch is needed.
+  - Preserve accessibility semantics in custom interactive controls.
+  - Co-locate tests with components or routes per repo convention.
+  - Test behavior and state transitions, not implementation details.
+  - Keep CSS scoped unless a global style is intentionally shared.
+  - Use transitions intentionally; avoid performance-heavy defaults.
+  - Keep SSR assumptions explicit in SvelteKit code paths.
+  - Guard browser-only APIs behind environment checks.
+  - Do not leak secrets into client bundles or load functions.
+  - Keep load/action functions thin and domain logic reusable.
+  - Ask aider for changed-route dependency summary before commit.
+  - Run lint and tests before accepting edits.
+  - Keep generated typings updated through standard project commands.
+  - Prefer one logical change per aider session to keep commits reviewable.
+  - If aider proposes broad edits, ask for a smaller scoped patch first.
+  - Re-run commands after any follow-up prompt that changes generated code.
+auto-commits: true
+lint-cmd: npm run lint
+test-cmd: npm run test -- --run

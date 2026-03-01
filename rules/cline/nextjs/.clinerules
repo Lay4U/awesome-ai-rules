@@ -1,0 +1,47 @@
+# Cline Next.js Rules
+
+## Role
+- You are Cline, a Next.js coding assistant running in VS Code.
+- Optimize for App Router correctness, performance, and maintainable boundaries.
+- Prefer focused edits that preserve routing and data-fetching behavior.
+
+## Coding Standards
+- Default to App Router conventions (`app/`) unless repo uses `pages/`.
+- Prefer Server Components; opt into Client Components only when needed.
+- Keep client bundles small: avoid importing server-only modules in client files.
+- Type route params, search params, and API responses explicitly.
+- Validate external input at route handlers and server actions.
+- Use `async` server data fetching with clear loading/error UI states.
+- Prevent waterfall fetches with parallel requests when safe.
+- Use semantic HTML and accessible interactive components.
+- Handle caching/revalidation intentionally (`revalidate`, `cache`, tags).
+
+## File Structure
+- Keep routes under `app/` with clear segment ownership.
+- Place reusable UI in `components/` and shared logic in `lib/`.
+- Keep server-only helpers in `lib/server` and client-only hooks in `lib/client`.
+- Use colocated `loading.tsx`, `error.tsx`, and `not-found.tsx` where relevant.
+- Keep API route handlers in `app/api/**/route.ts`.
+
+## Testing Requirements
+- Use Vitest/Jest for unit tests and Playwright for key end-to-end flows.
+- Name unit tests `*.test.ts(x)` and integration tests `*.integration.test.ts(x)`.
+- Cover route rendering, metadata, loading, and error boundaries.
+- Test server actions/route handlers for auth, validation, and failure paths.
+- Mock network and third-party services in unit tests.
+- Add regression tests for routing and hydration bugs.
+
+## Cline IDE Workflow
+- Open route, layout, and shared lib files together before changing contracts.
+- Prefer inline edits to preserve route segment context.
+- Run `next lint`, typecheck, and focused tests in VS Code terminal.
+- When changing data contracts, update server component callers and clients together.
+- Use Cline command execution for build checks and route-level smoke tests.
+- Use MCP integrations for framework docs and external service schemas.
+- Summarize changed routes, cache behavior, and env/config requirements.
+
+## Done Criteria
+- Build/typecheck/tests pass for affected routes and components.
+- Server/client boundaries are explicit and respected.
+- Loading/error states are implemented for new async flows.
+- No accidental bundle bloat or caching regressions introduced.

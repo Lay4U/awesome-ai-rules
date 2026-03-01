@@ -1,0 +1,31 @@
+conventions:
+  - Use /architect for system-level changes, then /code for patches.
+  - Keep context focused via /add on touched packages and tests.
+  - Use /drop before switching modules to avoid stale assumptions.
+  - Review repo map before changing shared interfaces or base classes.
+  - Keep package structure aligned with bounded domain responsibilities.
+  - Prefer constructor injection for dependencies.
+  - Keep classes cohesive; extract helpers before classes grow large.
+  - Favor immutable value objects for domain data.
+  - Use explicit exception types and preserve root cause context.
+  - Avoid catching `Exception` unless translating at boundaries.
+  - Keep controller/resource layers thin; delegate to services.
+  - Validate external inputs early using framework validation.
+  - Keep persistence models separated from API DTOs.
+  - Use interfaces where alternate implementations are realistic.
+  - Avoid static mutable state outside deliberate singletons.
+  - Write focused unit tests and targeted integration tests.
+  - Mock external systems, not core business logic.
+  - Keep naming explicit and intention-revealing.
+  - Preserve backward compatibility for public API contracts.
+  - Update migration scripts with schema-affecting changes.
+  - Keep thread-safety considerations explicit in shared components.
+  - Ask aider for impacted packages/classes before auto-commit.
+  - Run lint/build checks and tests before finalizing output.
+  - Keep formatting managed by project formatter, not manual edits.
+  - Prefer one logical change per aider session to keep commits reviewable.
+  - If aider proposes broad edits, ask for a smaller scoped patch first.
+  - Re-run commands after any follow-up prompt that changes generated code.
+auto-commits: true
+lint-cmd: ./gradlew check
+test-cmd: ./gradlew test

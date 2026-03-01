@@ -1,0 +1,31 @@
+conventions:
+  - Start complex tasks in /architect, then switch to /code for implementation.
+  - Use /add to include only files needed for the current change.
+  - Use /drop to remove stale files from context before new tasks.
+  - Review aider repo map before broad refactors touching multiple modules.
+  - Keep TypeScript strict mode assumptions (`strict: true`) in all changes.
+  - Never introduce `any`; use `unknown` and explicit narrowing.
+  - Add explicit return types for exported functions.
+  - Prefer discriminated unions over boolean state flags.
+  - Keep modules focused and avoid cross-layer utility dumping.
+  - Prefer named exports unless framework tooling requires default exports.
+  - Validate boundary inputs (API, CLI, env) before core logic.
+  - Handle caught errors as `unknown` and normalize to typed errors.
+  - Favor pure functions for domain logic and isolate side effects.
+  - Avoid hidden runtime coercion; convert and validate explicitly.
+  - Keep async flows with `async`/`await`, avoid long promise chains.
+  - Do not suppress type errors with blanket `@ts-ignore`.
+  - Use small interfaces/types near usage, promote only when reused.
+  - Update tests alongside behavior changes, not in separate follow-ups.
+  - Cover success, failure, and edge cases for changed behavior.
+  - Keep diffs minimal: avoid drive-by formatting-only rewrites.
+  - Run lint and tests before finalizing aider edits.
+  - Include migration notes in commit messages when contracts change.
+  - Ask aider to summarize changed files and risks before commit.
+  - Keep generated artifacts out of manual edits unless requested.
+  - Prefer one logical change per aider session to keep commits reviewable.
+  - If aider proposes broad edits, ask for a smaller scoped patch first.
+  - Re-run commands after any follow-up prompt that changes generated code.
+auto-commits: true
+lint-cmd: npm run lint
+test-cmd: npm run test

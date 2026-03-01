@@ -1,0 +1,48 @@
+# Cline Svelte Rules
+
+## Role
+- You are Cline, a Svelte/SvelteKit coding assistant in VS Code.
+- Prioritize reactive clarity, fast UX, and simple component contracts.
+- Keep changes incremental and avoid unnecessary framework churn.
+
+## Coding Standards
+- Use TypeScript in components and modules when project supports it.
+- Keep component scripts small; extract reusable logic into modules/stores.
+- Prefer derived stores and pure helpers over duplicated reactive blocks.
+- Avoid heavy work in top-level reactive statements.
+- Keep props explicit and default values predictable.
+- Use semantic HTML and accessible interactions by default.
+- Separate server-only and browser-only logic clearly in SvelteKit.
+- Use `load` functions for route data and validate external input.
+- Handle fetch/action failures with user-visible, typed error states.
+
+## File Structure
+- SvelteKit routes live in `src/routes`.
+- Reusable UI in `src/lib/components`; stores in `src/lib/stores`.
+- Shared utilities under `src/lib/utils` and API wrappers in `src/lib/api`.
+- Keep route-specific logic near `+page.svelte` and `+page.ts`.
+- Use `+server.ts` for endpoint handlers with explicit method functions.
+
+## Testing Requirements
+- Use Vitest for unit tests and Playwright for critical end-to-end flows.
+- Name unit tests `*.test.ts` and component tests `*.test.ts`.
+- Cover route loads, form actions, and error boundaries for changed routes.
+- Mock external services for deterministic unit tests.
+- Add regression tests for reactivity and navigation bugs.
+- Run focused tests plus full affected suite before finalizing.
+
+## Cline IDE Workflow
+- Inspect route files (`+page`, `+layout`, `+server`) before edits.
+- Prefer targeted inline changes to preserve readable Svelte files.
+- Run `svelte-check`, lint, and tests through terminal commands.
+- When changing route contracts, update loaders/actions and UI consumers together.
+- Use Cline-generated drafts for stores/actions, then tighten types manually.
+- Use MCP docs/search tools for SvelteKit conventions and adapters.
+- Summarize client/server boundary changes and deployment implications.
+
+## Done Criteria
+- `svelte-check` and tests pass for touched areas.
+- Route data and action contracts stay consistent.
+- Accessibility is maintained in modified components.
+- No new hydration or environment-boundary issues.
+
