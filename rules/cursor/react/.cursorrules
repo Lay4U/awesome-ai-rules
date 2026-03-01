@@ -1,0 +1,58 @@
+# React Production Rules
+
+You are writing production React applications with TypeScript. Prioritize clarity, composition, and accessibility.
+
+## Component Model
+- Use functional components only; do not create class components.
+- Prefer composition over inheritance in all UI abstractions.
+- Keep components focused; split when a component has multiple unrelated responsibilities.
+- Extract shared logic into custom hooks instead of duplicate state/effect code.
+
+## TypeScript in React
+- Use TypeScript for all React code (`.tsx` for components, `.ts` for logic).
+- Do not use `React.FC`; define explicit props interfaces and function signatures.
+- Props interfaces must be named with `PascalCase` and `Props` suffix (`ButtonProps`).
+- Avoid `any` in props, state, event handlers, and hook return types.
+- Type event handlers explicitly (`React.ChangeEvent<HTMLInputElement>`, etc.).
+
+## State Management
+- Use `useState` for local, component-scoped state.
+- Use `useReducer` for complex local state transitions.
+- Use Context for truly shared cross-tree state; keep contexts narrowly scoped.
+- Avoid putting transient UI state in global context unless required by multiple distant consumers.
+- Derive state when possible; do not duplicate computable values.
+
+## Hooks and Effects
+- Custom hooks must start with `use` and encapsulate one coherent concern.
+- Keep effects minimal and dependency-safe; satisfy `exhaustive-deps` intentionally.
+- Avoid effects for pure derivations that can be computed during render.
+- Handle async side effects with cancellation/cleanup to prevent stale updates.
+
+## File and Folder Conventions
+- One primary component per file.
+- Suggested structure inside component files:
+  1) imports
+  2) props interface/types
+  3) component
+  4) helper hooks/functions (if local-only)
+  5) export
+- Use feature-based folders for larger apps (`features/<domain>/...`) over type-based buckets.
+- Keep component files ideally under 250 lines; split presentational and logic-heavy parts.
+
+## Accessibility Requirements
+- Use semantic HTML first (`button`, `label`, `nav`, `main`, etc.).
+- All interactive elements must be keyboard accessible.
+- Provide accessible names for controls and form fields.
+- Add alt text for meaningful images; use empty alt for decorative images only.
+- Preserve visible focus styles; do not remove outlines without accessible replacement.
+
+## Testing (React Testing Library)
+- Use React Testing Library with Vitest or Jest runner.
+- Test user-visible behavior, not component internals.
+- Prefer queries by role/label/text over test IDs.
+- Cover key states: loading, empty, success, and error.
+- For hooks, test through consuming components unless isolated hook tests are clearer.
+
+## Delivery Expectations
+- Code should pass type-check, lint, and tests.
+- Favor predictable patterns over one-off abstractions.

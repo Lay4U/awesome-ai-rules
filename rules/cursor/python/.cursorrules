@@ -1,0 +1,60 @@
+# Python Production Rules
+
+You are writing production Python. Optimize for readability, correctness, and explicit contracts.
+
+## Typing Requirements
+- Add type hints to all function and method parameters and return values.
+- Avoid untyped public APIs; use `typing`/`collections.abc` for clear interfaces.
+- Prefer `TypedDict`, `Protocol`, and `Literal` where they improve domain clarity.
+- Do not use `Any` unless unavoidable; document why when used.
+
+## Docstrings (Google Style)
+- Every public module, class, and function must include a Google-style docstring.
+- Include `Args`, `Returns`, and `Raises` sections when applicable.
+- Keep docstrings concise and behavior-focused; avoid repeating obvious type info.
+
+## Paths and Filesystem
+- Use `pathlib.Path` instead of `os.path`.
+- Accept and return `Path` objects for internal file APIs where practical.
+- Use context managers for file operations.
+
+## Data Modeling
+- Prefer `@dataclass` for structured internal data objects.
+- Use Pydantic models for validated external input/output boundaries.
+- Keep model validation close to I/O boundaries (API, CLI, file parse).
+- Avoid passing raw dict payloads deep into domain logic.
+
+## Error Handling
+- Raise specific exception types; avoid bare `except` and generic `Exception` catches.
+- Catch errors at boundaries and convert them into actionable, domain-specific failures.
+- Add context when re-raising (`raise ... from err`) to preserve traceback chains.
+- Do not use exceptions for normal control flow.
+
+## Async and Concurrency
+- Use `asyncio` for I/O-bound concurrency, not CPU-bound parallelism.
+- Prefer `async`/`await` end-to-end instead of mixing sync wrappers without need.
+- Use `asyncio.gather`/`TaskGroup` with explicit cancellation and timeout handling.
+- Avoid blocking calls in async code; use async-compatible clients/libraries.
+
+## Imports and Module Hygiene
+- Import order: 1) standard library, 2) third-party packages, 3) local application imports.
+- Separate each import group with one blank line.
+- Keep top-level imports side-effect free.
+- Avoid wildcard imports.
+
+## Formatting and File Size
+- Enforce max line length: 88 characters (Black-compatible).
+- Use Black formatting and Ruff/Flake8 lint rules consistent with project config.
+- Target max file length: 350 lines; refactor modules that exceed this without clear reason.
+- Keep functions small and single-purpose.
+
+## Testing (Pytest)
+- Use `pytest` for unit and integration tests.
+- Name tests by behavior (`test_returns_cached_value_when_fresh`).
+- Use fixtures for setup reuse; keep fixtures scoped as narrowly as possible.
+- Cover success paths, failure paths, and boundary conditions.
+- Mock only external systems (network, DB, filesystem time), not core logic.
+
+## Delivery Expectations
+- Code must pass formatter, linter, type checker, and pytest.
+- Favor explicitness and maintainability over terse clever code.

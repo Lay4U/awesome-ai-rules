@@ -1,0 +1,53 @@
+# Windsurf Rules: TypeScript
+
+## Baseline
+- Apply conventions aligned with strong TypeScript cursor-style standards.
+- Prefer explicit, maintainable code over clever implementations.
+- Keep business logic testable and modular.
+
+## Type Safety
+- Assume `strict` TypeScript settings in all generated code.
+- Never use `any`; use `unknown`, generics, or narrow unions.
+- Minimize type assertions; narrow through guards when possible.
+- Avoid non-null assertions unless justified by surrounding checks.
+- Use discriminated unions for variant states.
+- Mark immutable structures with `readonly` where useful.
+
+## Exports and Module Boundaries
+- Prefer named exports for modules, utilities, and components.
+- Avoid default exports unless framework requirements demand them.
+- Keep public API surfaces small and intentionally designed.
+- Co-locate implementation-specific types with their modules.
+
+## Modeling and API Contracts
+- Use `interface` for object-like contracts and public shapes.
+- Use `type` for unions/intersections and advanced compositions.
+- Type all exported function params and return values.
+- Avoid overly permissive maps and index signatures.
+
+## Error Strategy
+- Use custom error classes for domain/application failures.
+- Include stable error messages and machine-readable codes.
+- Never throw strings or untyped plain objects.
+- Preserve root causes when wrapping exceptions.
+- Handle or propagate errors deliberately at boundaries.
+
+## Testing
+- Use Vitest as the standard test runner and assertion framework.
+- Write deterministic tests with clear Arrange-Act-Assert structure.
+- Cover edge cases and failure paths, not only happy paths.
+- Prefer table-driven tests for repeated case matrices.
+- Keep mocks minimal and behavior-focused.
+
+## Style
+- Use 2-space indentation.
+- Use semicolons consistently.
+- Use single-quoted strings.
+- Favor small functions and meaningful names.
+- Remove dead code and stale comments.
+
+## Maintainability
+- Isolate side effects to I/O boundaries.
+- Prefer pure functions in core domain logic.
+- Keep dependencies focused and minimal.
+- Update tests and types with every behavior change.

@@ -1,0 +1,51 @@
+# TypeScript Production Rules
+
+You are writing production TypeScript. Optimize for correctness, readability, and long-term maintainability.
+
+## Compiler Strictness
+- Always assume `strict: true` in `tsconfig.json`.
+- Do not use `any`; use `unknown`, generics, or well-defined interfaces.
+- Do not allow implicit `any`; explicitly type all parameters and return values when inference is unclear.
+- Enable and satisfy `noImplicitAny`, `strictNullChecks`, and `noUncheckedIndexedAccess`.
+
+## Type Modeling
+- Prefer `interface` over `type` for object shapes and public contracts.
+- Use `type` for unions, mapped types, utility compositions, or primitives.
+- Use `as const` for literal config objects, action maps, and tuple-like arrays.
+- Prefer discriminated unions for variant state over boolean flags.
+- Avoid broad index signatures unless truly dynamic and validated.
+
+## Error Handling
+- Model expected failures with `Result<T, E>` patterns instead of throwing for control flow.
+- Reserve thrown exceptions for unexpected programmer/system errors.
+- Convert external failures (I/O, HTTP, parsing) into typed domain errors near boundaries.
+- Ensure every `Result` is handled explicitly before returning from service boundaries.
+
+## Imports and Module Boundaries
+- Import order: 1) built-in/node modules, 2) third-party packages, 3) internal absolute aliases, 4) relative imports.
+- Keep one blank line between each import group.
+- Prefer named exports over default exports for shared modules.
+- Avoid deep imports from package internals unless documented as stable.
+
+## Naming and Style
+- Variables, functions, parameters: `camelCase`.
+- Types, interfaces, classes, enums: `PascalCase`.
+- Constants with true immutability: `UPPER_SNAKE_CASE`; otherwise use `camelCase` with `const`.
+- Boolean names should read as predicates (`isReady`, `hasAccess`, `canRetry`).
+- Avoid abbreviations unless domain-standard.
+
+## File and Function Size
+- Target max file length: 300 lines; split by responsibility when larger.
+- Target max function length: 40 lines unless complexity is justified and documented.
+- One module should have one primary reason to change.
+
+## Testing (Vitest Preferred)
+- Use Vitest for unit and integration tests.
+- Co-locate tests as `*.test.ts` near source or in mirrored `__tests__` structure.
+- Test behavior and contracts, not implementation details.
+- Cover success, failure, and edge cases for all `Result`-returning logic.
+- Mock only external boundaries (network, filesystem, time), not pure domain logic.
+
+## Delivery Expectations
+- Produce code that passes type-check, lint, and tests without requiring relaxed rules.
+- When tradeoffs exist, choose safer types and explicitness over cleverness.

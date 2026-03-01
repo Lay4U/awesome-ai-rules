@@ -1,0 +1,16 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+
+# Dependencies
+node_modules/
+
+# Python cache
+__pycache__/
+
+# Editor settings
+.vscode/
+.idea/

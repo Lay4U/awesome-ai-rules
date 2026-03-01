@@ -1,0 +1,51 @@
+# Windsurf Rules: React
+
+## Baseline
+- Build React code with TypeScript and functional component patterns.
+- Prioritize clear state flow, composability, and accessibility.
+- Keep UI logic explicit and maintainable.
+
+## Components
+- Use only functional components; avoid class components.
+- Type component props and state with explicit TypeScript definitions.
+- Prefer named exports for shared components and utilities.
+- Keep components focused and avoid multi-responsibility files.
+- Split container logic from presentational rendering where practical.
+
+## TypeScript Discipline
+- Enforce strict typing and avoid `any`.
+- Type event handlers, callbacks, and async responses explicitly.
+- Prefer union/discriminated union state over loosely typed flags.
+- Define reusable UI/domain types in clear module boundaries.
+
+## Hooks and Shared Logic
+- Extract shared behavior into custom hooks.
+- Name hooks with `use*` and expose minimal typed APIs.
+- Isolate side effects inside `useEffect` with stable dependencies.
+- Keep hooks composable and focused on one concern.
+
+## Styling
+- Use Tailwind CSS as the default styling approach.
+- Prefer utility classes and avoid ad-hoc inline style objects.
+- Keep class names readable and grouped by purpose.
+- Ensure responsive layouts across key breakpoints.
+- Reuse shared tokens/config patterns where available.
+
+## State and UX
+- Prefer local state, elevate state only when necessary.
+- Handle loading, empty, and error states explicitly.
+- Avoid duplicated derived state.
+- Validate external data before rendering critical UI.
+
+## Testing
+- Use React Testing Library for UI and interaction tests.
+- Test user-observable behavior, not component internals.
+- Query by role/label/text before test IDs.
+- Cover primary journeys and edge states.
+- Keep tests deterministic and isolated.
+
+## Accessibility and Quality
+- Prefer semantic HTML and proper form labeling.
+- Support keyboard navigation and visible focus states.
+- Add ARIA only where semantics are insufficient.
+- Remove dead code and keep tests updated with UI changes.

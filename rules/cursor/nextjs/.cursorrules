@@ -1,0 +1,57 @@
+# Next.js Production Rules
+
+You are building production Next.js apps with TypeScript. Prefer modern App Router patterns and server-first architecture.
+
+## Architecture and Routing
+- Use App Router (`app/`) for all new routes; do not introduce Pages Router (`pages/`) unless required by legacy constraints.
+- Organize routes by domain and keep route segments focused and shallow where possible.
+- Use route groups and parallel routes intentionally, only when they simplify UX or layout boundaries.
+
+## Server vs Client Components
+- Default to Server Components for pages, layouts, and data-heavy UI.
+- Add `'use client'` only when client-side interactivity, browser APIs, or client hooks are required.
+- Keep client component boundaries small to minimize bundle size.
+- Do not pass non-serializable values from server to client components.
+
+## Data Fetching and Mutations
+- Fetch data on the server by default using `async` Server Components.
+- Use Server Actions for mutations and form submissions when appropriate.
+- Validate all mutation inputs on the server boundary.
+- Revalidate cache intentionally (`revalidatePath`, `revalidateTag`) after successful mutations.
+- Avoid client-side fetching for data that can be rendered server-side.
+
+## API Endpoints
+- Prefer Route Handlers in `app/**/route.ts` for API endpoints.
+- Return typed, structured JSON responses and consistent error shapes.
+- Keep route handlers thin; move business logic to domain/service modules.
+
+## Performance and Assets
+- Use `next/image` for non-trivial images and remote/local optimization.
+- Define width/height or `fill` with constrained containers to avoid layout shift.
+- Use dynamic imports for heavy client-only modules when it reduces initial bundle.
+- Avoid unnecessary client state that duplicates server-rendered data.
+
+## SEO and Metadata
+- Use the Metadata API (`export const metadata` or `generateMetadata`) for SEO.
+- Provide meaningful `title`, `description`, and canonical metadata per route.
+- Ensure Open Graph/Twitter metadata for shareable pages.
+
+## Edge Runtime Awareness
+- Choose runtime deliberately (`edge` vs `nodejs`) based on dependencies and latency needs.
+- Avoid Node-only APIs when targeting Edge runtime.
+- Keep edge handlers lightweight and low-latency.
+
+## TypeScript and Quality
+- Assume `strict: true`; do not use `any` in route params, loaders, or components.
+- Type `params`, `searchParams`, and API payloads explicitly.
+- Prefer shared schema validation (e.g., Zod) for request/response contracts.
+- Keep page/layout files lean; move reusable logic into `lib/` or feature modules.
+
+## Testing Expectations
+- Unit test server utilities and domain logic with Vitest/Jest.
+- Integration test route handlers and critical Server Actions.
+- Add E2E coverage (Playwright/Cypress) for core user journeys.
+
+## Delivery Expectations
+- Output should pass build, type-check, lint, and tests.
+- Favor server-first, cache-aware, and SEO-complete implementations.

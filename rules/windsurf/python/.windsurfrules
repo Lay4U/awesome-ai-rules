@@ -1,0 +1,50 @@
+# Windsurf Rules: Python
+
+## Baseline
+- Generate Python code that is explicit, typed, and production-ready.
+- Favor readability, clear interfaces, and low surprise behavior.
+- Keep modules cohesive and easy to test.
+
+## Typing
+- Require type hints for all public functions, methods, and attributes.
+- Always annotate return types, including `None`.
+- Use parameterized containers (`list[str]`, `dict[str, int]`, etc.).
+- Prefer precise typing tools (`Literal`, `TypedDict`, `Protocol`) when useful.
+- Avoid untyped APIs and ambiguous dynamic structures.
+
+## Documentation
+- Use Google-style docstrings for public classes/functions/modules.
+- Document purpose, arguments, returns, and raised exceptions.
+- Keep docstrings synchronized with behavior and signatures.
+
+## Data and Paths
+- Use `pathlib.Path` instead of `os.path`.
+- Prefer `dataclasses` for lightweight internal data models.
+- Use `pydantic` for validation-heavy external schemas.
+- Pass typed models rather than loose dictionaries when possible.
+
+## Error Handling
+- Raise specific exceptions and avoid broad catch-all blocks.
+- Define custom exceptions for domain-level error semantics.
+- Include actionable context in error messages.
+- Handle recoverable failures near integration boundaries.
+
+## Testing
+- Use `pytest` as the default testing framework.
+- Write unit tests for logic and integration tests for boundaries.
+- Use fixtures and parametrization to reduce duplication.
+- Ensure tests are deterministic and independent.
+- Cover edge cases and failure behavior explicitly.
+
+## Linting and Tooling
+- Use `ruff` for linting and formatting compliance.
+- Keep generated and modified code `ruff` clean.
+- Use `uv` for dependency, environment, and package management.
+- Prefer reproducible lockfiles and pinned constraints.
+
+## Style
+- Follow PEP 8 and project `ruff` configuration.
+- Keep functions small and naming explicit.
+- Avoid dead code, wildcard imports, and unused symbols.
+- Prefer constants/enums over magic string literals.
+- Keep imports ordered and avoid hidden side effects at import time.
